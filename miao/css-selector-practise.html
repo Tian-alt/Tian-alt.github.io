@@ -6,6 +6,90 @@
     <title>Document</title>
     <style>
 
+      body > p:first-of-type{
+        color: red;
+      }
+      /* body > p:first-child{
+        color: red;
+      } */
+
+      [tabindex]:hover{
+        color: red;
+      }
+      [tabindex]:active{
+        color: green;
+      }
+      [tabindex]:focus{
+        color: blue;
+      }
+
+      .a.c > span{
+        color: red;
+      }
+      .a.c > span > span{
+        color: green;
+      }
+      .a.c > span > span + span{
+        color: blue;
+      }
+
+      div a:visited{
+        color: orange;
+      }
+      div a:link{
+        color: pink;
+      }
+      div a:visited{
+        color: orange;
+      }
+      div a[href*="mailto" i]{
+        color: blue;
+      }
+      div a[href*="tel"]{
+        color: yellow;
+      }
+      div a[href*="pdf" i]{
+        font-size: 30px;
+      }
+
+      div[class = a] li:nth-child(4){
+        color: red;
+      }
+      div[class = a] li:nth-child(5){
+        color: red;
+      }
+      div[class = a] li:nth-child(6){
+        color: red;
+      }
+      div[class = a] li:nth-child(7){
+        color: red;
+      }
+
+      .b li:nth-child(-n+25){
+        color:red;
+      }
+      .b li:nth-child(n+65){
+        color:green;
+      }
+      .b li:nth-child(-n+50):nth-child(n+35){
+        color:blue;
+      }
+
+      /* ddfdf */
+      /* 质数红色，合数绿色 */
+
+      .prime li{
+        color: red;
+      }
+      .prime li:nth-child(2n+4),
+      .prime li:nth-child(3n+6),
+      .prime li:nth-child(5n+10),
+      .prime li:nth-child(7n+14)
+      {
+        color: green;
+      }
+
+
     </style>
   </head>
   <body>
