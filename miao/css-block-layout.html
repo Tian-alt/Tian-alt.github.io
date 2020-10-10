@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+
+    header{
+      color: white;
+      background-color: black;
+    }
+   header p{
+     width: 600px;
+     margin: 0 auto;
+   }
+
+   main{
+     width: 600px;
+     margin: 0 auto;
+   }
+
+   ul{
+     list-style: none;
+     padding-left: 0;
+   }
+
+   li{
+     width: 180px;
+     height: 40px;
+     border: 3px solid black;
+     margin: 15px 30px;
+     box-sizing: border-box;
+     background-color: #ffc0cb;
+     line-height: 34px;
+     text-align: center;
+   }
+   li:hover{
+     background-color: red;
+   }
+   li:nth-child(-n+4){
+     margin-left: 0;
+   }
+   li:nth-child(5){
+     margin-top: -220px;
+   }
+   li:nth-child(n+5){
+     margin-left: 210px;
+   }
+   li:nth-child(9){
+    margin-top: -220px;
+   }
+   li:nth-child(n+9){
+     margin-left: 420px;
+   }
+
+   div{
+     font-size: 0px;
+     text-align: center;
+     margin: 0;
+   }
+   span{
+     width: 180px;
+     height: 40px;
+     font-size: 16px;
+     line-height: 34px;
+     display: inline-block;
+     border: 3px solid black;
+     margin:7.5px 15px;
+     background-color: #ffc0cb;
+     overflow: hidden;
+     vertical-align: top;
+     box-sizing: border-box;
+   }
+   span:hover{
+     background-color: red;
+   }
+   span:nth-child(3n+1){
+     margin-left: 0px;
+   }
+   span:nth-child(3n){
+     margin-right: 0px;
+   }
+
+   div p{
+     font-size: 16px;
+     text-align: left;
+     border-bottom: dotted 1px black;
+     margin: 0 auto;
+   }
+
+   div p:nth-child(5){
+     border-bottom-color: transparent;
+   }
+
+   main + p{
+    text-align: center;
+    background-color: rgb(238, 138, 238);
+   }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <p>
+      hello world 请调整浏览器窗口大小查看效果
+    </p>
+  </header>
+
+  <main>
+    <p>
+      页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
+    </p>
+
+    <ul>
+      <li>宽180高40(包含边框)</li>
+      <li>水平间隙30px</li>
+      <li>垂直间隙15px</li>
+      <li>边框宽度3px</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+    </ul>
+
+    <div>
+      <span>宽180高40(包含边框)</span>
+      <span>产品</span>
+      <span>产品</span>
+      <span>水平间隙30px</span>
+      <span>产品</span>
+      <span>产品</span>
+      <span>垂直间隙30px</span>
+      <span>产品</span>
+      <span>产品</span>
+      <span>边框宽度3px</span>
+      <span>产品</span>
+      <span>产品</span>
+    </div>
+
+    <div>
+      <p>link</p>
+      <p>link</p>
+      <p>link</p>
+      <p>link</p>
+      <p>link</p>
+    </div>
+  </main>
+
+  <p>©版权所有<br>本页所有布局均使用块元素</p>
+
+</body>
+</html>
