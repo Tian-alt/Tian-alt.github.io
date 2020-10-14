@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    * {
+      background-color: rgba(250, 128, 114, 0.2);
+    }
+
+    [class]{
+      margin: 100px auto;
+      width: 600px;
+      height: 300px;
+    }
+    img.img{
+      display: block;
+      object-fit: contain;
+    }
+
+    div.background{
+      background: url("https://w.wallhaven.cc/full/39/wallhaven-39x293.jpg") no-repeat center/contain ;
+    }
+
+    div.position{
+      position: relative;
+    }
+    div.position img.position{
+      width: 480px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+      margin: auto;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <img src="https://w.wallhaven.cc/full/6q/wallhaven-6qw67w.png" alt="" class="img">
+  <img src="https://w.wallhaven.cc/full/0j/wallhaven-0jegj5.jpg" alt="" class="img">
+  <div class="position">
+    <img src="https://w.wallhaven.cc/full/0j/wallhaven-0jegj5.jpg" alt="" class="position">
+  </div>
+  <img src="https://w.wallhaven.cc/full/39/wallhaven-39x293.jpg" alt="" class="img">
+  <div class="background"></div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    *{
+      background-color: rgba(250, 128, 114, 0.2);
+    }
+
+    div[class]{
+      width: 600px;
+      height: 600px;
+      margin: 100px auto;
+      /* background-color: #bfa; */
+    }
+
+    .inline h1{
+      width: 600px;
+      height: 600px;
+      line-height: 600px;
+    }
+    .inline span{
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .position{
+      /* background-color: #bfa; */
+      position: relative;
+    }
+    .position h1{
+      width: 600px;
+      height: 210px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 行内方案 -->
+
+  <div class="inline">
+    <h1>
+      <span>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos. Error, delectus! Dignissimos.
+      </span>
+    </h1>
+  </div>
+
+  <!-- 定位方案 -->
+
+  <div class="position">
+    <h1>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos. Error, delectus! Dignissimos.
+    </h1>
+  </div>
+  <!-- 表格方案 -->
+  <!-- flex方案 -->
+  <!-- 2-D变换方案 -->
+</body>
+</html>
