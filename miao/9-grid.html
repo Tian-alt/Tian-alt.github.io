@@ -4,13 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="./css/9-grid.css">
+  <link rel="stylesheet" href="">
+  <style>
+    * {
+  /* margin: 0; */
+  background-color: rgba(250, 128, 114, 0.2);
+}
+
+/* 表布局
+  先给tr,col设置边框，再利用边框样式的优先级用td边框覆盖
+*/
+body, html{
+  width: 100%;
+  height: 100%;
+}
+table{
+  margin: 100px auto;
+  border-collapse: collapse;
+}
+
+td{
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  font-size: 22px;
+  border: 4px pink solid;
+}
+ /* tr, col{
+  border: 4px pink solid;
+} */
+
+
+
+
+td:hover{
+  background-color: azure;
+  border:  4px solid azure;
+  cursor: pointer; 
+}
+
+/* 浮动 */
+/* main{
+    margin: 100px auto;
+    position: relative;
+    width: 462px;
+    height: 462px;
+}
+
+div{
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  font-size: 22px;
+  border: 3px solid pink;
+  line-height: 150px;
+  margin: 0;
+  position: absolute;
+}
+
+div:nth-child(3n+1){
+  left: 0;
+}
+
+div:nth-child(3n+2){
+  left: 153px;
+}
+div:nth-child(3n){
+  right: 0;
+}
+
+
+div:nth-child(-n+3){
+  top: 0;
+}
+div:nth-child(n+4):nth-child(-n+6){
+  top: 153px;
+}
+div:nth-child(n+1):nth-child(-n+9){
+  bottom: 0;
+}
+
+div:hover{
+  background-color: azure;
+  border-color: azure;
+  z-index: 99999;
+} */
+
+/* 行内 */
+/* ul{
+  width: 462px;
+  height: 462px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none; 
+  font-size: 0;
+  overflow: hidden;
+  display: inline-block;
+  padding-right: 3px;
+  padding-block-end: 3px;
+}
+
+ul li{
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  font-size: 22px;
+  line-height: 150px;
+  margin: 0;
+  display: inline-block;
+  border: 3px solid pink;
+  margin-right: -3px;
+  margin-bottom: -3px;
+  position: relative;
+}
+
+ul li:hover{
+  border-color: azure;
+  background-color: azure;
+  z-index: 100;
+}
+ */
+
+  </style>
 </head>
 <body>
 
-<!-- 表布局
- <div>
+<!-- 表布局 -->
    <table>
+     <col>
+     <col>
+     <col>
      <tr>
        <td>1</td>
        <td>2</td>
@@ -27,8 +150,9 @@
        <td>9</td>
      </tr>
    </table>
- </div> -->
- <main>
+
+ <!-- 浮动 -->
+ <!-- <main>
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -38,7 +162,20 @@
   <div>7</div>
   <div>8</div>
   <div>9</div>
-</main>
+</main> -->
+
+<!-- 行内块 -->
+<!-- <ul>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li><br>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li><br>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li><br>
+</ul> -->
 
 </body>
 </html>

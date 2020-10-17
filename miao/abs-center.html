@@ -6,67 +6,88 @@
   <title>Document</title>
   <style>
 
-    *{
-      background-color: rgba(250, 128, 114, 0.2);
+    * {
+    margin: 0;
+    background-color: rgba(250, 128, 114, 0.2);
+    position: relative;
     }
 
-    div[class]{
+    div{
       width: 600px;
       height: 600px;
       margin: 100px auto;
-      /* background-color: #bfa; */
     }
 
-    .inline h1{
-      width: 600px;
-      height: 600px;
-      line-height: 600px;
+
+
+    h1{
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
-    .inline span{
+
+    div.inline{
+      line-height: 600px;
+      text-align: center;
+    }
+    h1.inline{
+      width: 50%;
       display: inline-block;
       line-height: normal;
       vertical-align: middle;
-      text-align: center;
+      /* margin: 0 auto; */
+      /* margin-top: 100px; */
     }
 
-    .position{
-      /* background-color: #bfa; */
-      position: relative;
-    }
-    .position h1{
-      width: 600px;
-      height: 210px;
+    h1.position{
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       margin: auto;
-      text-align: center;
+      width: 50%;
+      height: 50%;
     }
 
+    div.table{
+      display: table-cell;
+      /* margin: 100px auto; */
+      vertical-align: middle;
+    }
+
+    h1.table{
+      width: 50%;
+      margin: auto;
+    }
+
+  
   </style>
 </head>
 <body>
-  <!-- 行内方案 -->
 
+  <!-- inline-block方案 -->
   <div class="inline">
-    <h1>
-      <span>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos. Error, delectus! Dignissimos.
-      </span>
+    <h1 class="inline">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
     </h1>
   </div>
 
   <!-- 定位方案 -->
-
   <div class="position">
-    <h1>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos. Error, delectus! Dignissimos.
+    <h1 class="position">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
     </h1>
   </div>
+
   <!-- 表格方案 -->
-  <!-- flex方案 -->
-  <!-- 2-D变换方案 -->
+  <div>
+  <div class="table"> 
+    <h1 class="table">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
+    </h1>
+  </div>
+  </div>
+  
 </body>
 </html>
