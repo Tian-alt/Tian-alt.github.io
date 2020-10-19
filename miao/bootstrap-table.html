@@ -4,9 +4,143 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="css/bootstrap-table.css">
+  <link rel="stylesheet" href="">
+  <style>
+    body{
+      margin: 50px 0;
+    }
+
+    /* table */
+    .table{
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table thead tr {
+      border-bottom: 2px solid #dee2e6;
+    }
+    .table th {
+      text-align: left;
+    }
+    .table tbody tr{
+      border-top: 1px solid #dee2e6;
+    }
+    .table th,
+    .table td{
+      padding: 12px;
+    }
+
+    /* table-dark */
+    .table-dark tr{
+      background-color: #343a40;
+      color: white;
+    }
+    .table-dark thead tr,
+    .table-dark tbody tr{
+      border-color: #454d55;
+    }
+
+    /* table-small */
+    .table-small th,
+    .table-small td{
+      padding: 5px;
+    }
+
+    /* table-striped */
+    .table-striped tbody tr:nth-child(odd){
+      background-color: #f2f2f2;
+    }
+    .table-dark.table-striped tbody tr:nth-child(odd){
+      background-color: #3e444a;
+    }
+
+    /* table-hover */
+    .table-hover tbody tr:hover {
+      background-color: #ececec;
+    }
+    .table-dark.table-hover tbody tr:hover {
+      background-color: #43494e;
+    }
+
+    /* table-bordered */
+    .table-bordered th,
+    .table-bordered td{
+      border-right: 1px solid #dee2e6;
+    }
+    .table-dark.table-bordered th,
+    .table-dark.table-bordered td{
+      border-right: 1px solid #454d55;
+    }
+    .table-bordered{
+      border: 1px solid #dee2e6;;
+    }
+    .table-dark.table-bordered {
+      border: 1px solid #454d55;
+    }
+  
+    /* table-borderless */
+    .table-borderless th,
+    .table-borderless td{
+      border: none;
+    }
+    .table-borderless thead tr {
+      border:none;
+    }
+    .table-borderless tbody tr{
+      border:none;
+    }
+    .table-dark.table-borderless th,
+    .table-dark.table-borderless td{
+      border: none;
+    }
+    .table-dark.table-borderless thead tr,
+    .table-dark.table-borderless tbody tr{
+      border:none;
+    }
+  </style>
 </head>
 <body>
   
+  <table class="table xtable-dark table-hover xtable-small table-striped table-bordered table-borderless">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Foot</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>
