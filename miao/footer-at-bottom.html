@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      background-color: rgba(250, 128, 114, 0.2);
+      }
+    html {
+      height: 100%;
+    }
+    body {
+      /* display: flow-root; */
+      overflow: hidden;
+      /* 默认body高度被其子元素撑开，
+        设置min-height为100%可以让高度最小等于Html元素高度，定位时可以让footer在下面*/
+      min-height: 100%;
+      position: relative;
+      margin: 0;
+      /* 为下方footer让出空间 */
+      box-sizing: border-box;
+      padding-bottom: 25px;
+    }
+    p {
+      margin: 0;
+    }
+    footer {
+      height: 25px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam obcaecati iure possimus, ipsam dolore soluta recusandae officiis itaque est ducimus fuga quidem vel magni beatae similique eveniet atque molestias. Ad!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam obcaecati iure possimus, ipsam dolore soluta recusandae officiis itaque est ducimus fuga quidem vel magni beatae similique eveniet atque molestias. Ad!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam obcaecati iure possimus, ipsam dolore soluta recusandae officiis itaque est ducimus fuga quidem vel magni beatae similique eveniet atque molestias. Ad!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam obcaecati iure possimus, ipsam dolore soluta recusandae officiis itaque est ducimus fuga quidem vel magni beatae similique eveniet atque molestias. Ad!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam obcaecati iure possimus, ipsam dolore soluta recusandae officiis itaque est ducimus fuga quidem vel magni beatae similique eveniet atque molestias. Ad!
+  </p>
+  <footer>
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, distinctio.
+  </footer>
+</body>
+</html>

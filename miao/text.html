@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+        * {
+        /* background-color: rgba(250, 128, 114, 0.2); */
+      }
+        .container {
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            /* animation: rotate 20s infinite linear; */
+        }
+        .slide {
+            width: 200px;
+            height: 200px;
+            opacity: 0.7;
+            position: absolute;
+            /* perspective: 1000px; */
+        }
+        .right {
+            transform: rotateY(90deg) translateZ(100px);
+            background:salmon;
+        }
+        .left {
+            transform: rotateY(-90deg) translateZ(100px);
+            background-color: orange;
+        }
+        .top {
+            transform: rotateX(90deg) translateZ(100px);
+            background-color: yellowgreen;
+        }
+        .bottom {
+            transform: rotateX(-90deg) translateZ(100px);
+            background-color: navy;
+        }
+        .front {
+            transform: translateZ(-100px);
+            background-color: cadetblue;
+        }
+        .back {
+            transform: translateZ(100px);
+            background-color: darksalmon;
+        }
+
+        @keyframes rotate {
+            form{
+                transform:rotateX(0) rotateZ(0)
+            }
+
+            to{
+                transform:rotateX(1turn) rotateZ(1turn)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top slide"></div>
+        <div class="bottom slide""></div>
+        <div class="left slide""></div>
+        <div class="right slide""></div>
+        <div class="front slide""></div>
+        <div class="back slide""></div>
+    </div>
+</body>
+</html>
