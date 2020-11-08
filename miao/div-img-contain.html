@@ -24,13 +24,21 @@
       background: url("https://w.wallhaven.cc/full/39/wallhaven-39x293.jpg") no-repeat center/contain ;
     }
 
+    /* 使图片被容器包裹的两种方法
+      - 背景法
+      - 绝对居中法
+          - 其实类似于垂直水平居中方法中的绝对居中
+          - 优点是不论图片多大，都能保证图片总是居中的
+          - 图片宽高最好不要超过父元素宽高，否则图片一定会占满父元素
+              除非强行设置宽高
+     */
 
-    /* img在div里面完全居中 */
     div.position{
       position: relative;
     }
     div.position img.position{
-      width: 480px;
+      /* height: 100px; */
+      /* width: 150px; */
       top: 0;
       bottom: 0;
       left: 0;

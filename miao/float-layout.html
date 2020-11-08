@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    *{
+    * {
       background-color: rgba(250, 128, 114, 0.2);
       /* box-shadow: 0 0 1px salmon; */
     }
 
     /* 用main来包裹section */
-    main{
+    main {
       width: 1226px;
       margin: auto;
-      overflow: hidden;
+      /* overflow: hidden; */
+      /* background-color: #bfc; */
     }
-    section{
+
+    section {
       /* border: 1px solid orange; */
       overflow: hidden;
       /* width: 1240px; */
       margin: auto;
-      /* 清除section中由于div的margin超出来的那部分 */
+      /* 由于外边距合并，section四周也有与div相同的margin
+            设置父元素margin为负，清除掉这些多余的margin
+       */
       margin: -7px;
     }
-    div{
+
+    div {
       float: left;
-      width:234px;
-      height:300px;
+      width: 234px;
+      height: 300px;
       margin: 7px;
       box-sizing: border-box;
       /* border: 1px solid white; */
     }
-    div:nth-child(1){
+
+    div:nth-child(1) {
       height: 614px;
     }
+
     div:nth-last-child(1),
-    div:nth-last-child(2){
+    div:nth-last-child(2) {
       height: 143px;
     }
   </style>
 </head>
+
 <body>
   <main>
-  <section>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
-    <div>8</div>
-    <div>9</div>
-    <div>0</div>
-  </section>
-</main>
+    <section>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+      <div>0</div>
+    </section>
+  </main>
 </body>
+
 </html>

@@ -12,6 +12,7 @@
             width: 200px;
             height: 200px;
             margin: 100px auto;
+            /* 不能加在父元素，因为从父元素看每面距离都不一样，会造成秤砣效果 */
             /* perspective: 1000px; */
             transform-style: preserve-3d;
             animation: rotate 5s infinite linear;
@@ -21,8 +22,15 @@
             height: 200px;
             /* opacity: 0.7; */
             position: absolute;
-            perspective: 1000px;
+            /* perspective可以默认不写 */
+            /* perspective: 1000px; */
         }
+
+        /* 
+            - 沿着X，Y轴旋转的同时，Z轴方向也变了，之后再根据Z轴平移
+            - 沿X轴旋转90度，到正上方，沿Y轴旋转90度，到正右放
+            - 正后方那个面也可以沿Y轴旋转180度
+         */
         .right {
             transform: rotateY(90deg) translateZ(100px);
             background:salmon;
@@ -49,11 +57,8 @@
         }
 
         @keyframes rotate {
-            /* 如果是0可以省略，默认就是0 */
-            /* form{
-                transform:rotateX(0) rotateZ(0)
-            } */
 
+            /* 如果动画从零开始0可以省略，因为默认就是0 */
             to{
                 transform:rotateX(1turn) rotateZ(1turn)
             }

@@ -1,109 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-
     * {
-    margin: 0;
-    background-color: rgba(250, 128, 114, 0.2);
-    position: relative;
+      background-color: rgba(250, 128, 114, 0.2);
     }
 
-    div{
-      width: 600px;
-      height: 600px;
+    main {
+      width: 800px;
+      height: 6000px;
       margin: 100px auto;
     }
 
-
-
-    h1{
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    div {
+      color: azure;
+      white-space: pre;
+      font-size: 20px;
+      /* line-height: 1.2; */
     }
 
-    div.inline{
-      line-height: 600px;
-      text-align: center;
-    }
-    h1.inline{
-      width: 50%;
-      display: inline-block;
-      line-height: normal;
-      vertical-align: middle;
-      /* margin: 0 auto; */
-      /* margin-top: 100px; */
+    .Center-Container {
+      position: relative;
+      width: 800px;
+      height: 500px;
+      border: 1px solid azure;
+      /* line-height: 500px; */
+      /* background-color: #bfa; */
     }
 
-    h1.position{
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
+    .Absolute-Center {
       width: 50%;
       height: 50%;
+      overflow: auto;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
 
-    div.table{
-      display: table-cell;
-      /* margin: 100px auto; */
-      vertical-align: middle;
+    .Absolute-Center.is-Fixed {
+      position: fixed;
+      z-index: 999;
     }
 
-    h1.table{
+    .Absolute-Center.is-Right {
+      left: auto;
+      right: 0;
+      text-align: right;
+    }
+
+    .Absolute-Center.is-Left {
+      right: auto;
+      left: 0;
+      text-align: left;
+      /* 字体为什么没有在最左？ */
+    }
+
+    .Absolute-Center.is-Responsive {
+      width: 60%;
+      height: 60%;
+      min-width: 200px;
+      max-width: 400px;
+      padding: 40px;
+    }
+
+    .Absolute-Center.is-Overflow {
+      overflow: auto;
+    }
+
+    .Absolute-Center.is-Resizable {
+      min-width: 20%;
+      max-width: 80%;
+      min-height: 20%;
+      max-height: 80%;
+      resize: both;
+      overflow: auto;
+    }
+
+    /*    最好对图片用height: auto,而不是父元素
+    .Absolute-Center.is-Image {
+      height: auto;
+    } */
+
+    .Absolute-Center.is-Image img {
+      width: 20%;
+      height: auto;
+    }
+
+    .is-Negative {
+      width: 300px;
+      height: 200px;
+      padding: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -170px;
+      /* (width + padding)/2 */
+      margin-top: -120px;
+      /* (height + padding)/2 */
+    }
+
+    /* Transforms方法 */
+    .is-Transformed {
       width: 50%;
       margin: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
     }
 
-    /* flex方案 */
-    div.flex{
+    /* Table-cell方法 */
+    .Center-Container.is-Table {
+      display: table;
+    }
+    .is-Table .Table-Cell {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .is-Table .Center-Block {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    /* Inline-block方法 */
+    .Center-Container.is-Inline {
+      text-align: center;
+      overflow: auto;
+      /* 这里调试时出现一个小问题
+        - 为了让前面示例中元素的空格起作用，用了white-space:pre，
+          作用是保留空白符和换行符
+        - 但是当把它的子元素设置为inline-block时，after元素与子元素不是在同一行
+          会把父元素撑满
+        - 由此可以看出伪元素生成时，与其兄弟元素是不在同一行的
+       */
+      white-space: normal;
+    }
+    .Center-Container.is-Inline::after,
+    .is-Inline .Center-Block {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .Center-Container.is-Inline::after {
+      content: '';
+      height: 100%;
+      margin-left: -0.25em;
+      /* To offset spacing. May vary by font */
+    }
+    .is-Inline .Center-Block {
+      max-width: 99%;
+      /* Prevents issues with long content causes the content block to be pushed to the top */
+      /* max-width: calc(100% - 0.25em) /* Only for IE9+ */
+    }
+
+    /* Flexbox方法 */
+    .Center-Container.is-Flexbox{
       display: flex;
     }
-    h1{
+    .is-Flexbox {
       margin: auto;
     }
-
-  
   </style>
 </head>
+
 <body>
+  <main>
 
-  <!-- inline-block方案 -->
-  <div class="inline">
-    <h1 class="inline">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
-    </h1>
-  </div>
+    <div class="Center-Container">
+      <div class="Absolute-Center">
+        容器内的绝对居中,
+        父元素使用了position:relative,
+        实现垂直和水平居中
+      </div>
+      <!--   <div class="Absolute-Center is-Fixed">
+        视区内的绝对居中
+        仅仅使用css实现viewport的居中，包括水平居中和垂直居中
+        取消注释代码查看效果
+      </div> 
+    -->
+    </div>
 
-  <!-- 定位方案 -->
-  <div class="position">
-    <h1 class="position">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
-    </h1>
-  </div>
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Right">
+        容器内边栏的绝对居中 右对齐
+        内容块使用了 right:0;left:auto
+        使其固定于容器右侧
+      </div>
+    </div>
 
-  <!-- 表格方案 -->
-  <div>
-  <div class="table"> 
-    <h1 class="table">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
-    </h1>
-  </div>
-  </div>
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Left">
+        容器内边栏的绝对居中 右对齐
+        内容块使用了 right:0;left:auto
+        使其固定于容器右侧
+      </div>
+    </div>
 
-  <!-- flex方案 -->
-  <div class="flex">
-    <h1>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sunt laboriosam dignissimos.
-    </h1>
-  </div>
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Responsive">
+        响应式（Responsive）绝对居中
+        内容块使用了百分比形式的width/height，min-/max-,padding
+        使其水平垂直居中显示
+      </div>
+    </div>
 
-  
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Overflow">
+        溢出情况(overflow)绝对居中
+        内容块使用了 overflow:auto
+        使其水平垂直居中显示在容器中央
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti ex, nam, excepturi consequatur saepe dolor
+        rem natus necessitatibus maiores quisquam modi sequi est, nisi culpa. Eius beatae eum sequi minus.
+        <!-- 这个好像没必要 -->
+      </div>
+    </div>
+
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Resizable">
+        重绘(resizing)绝对居中
+        内容块使用了resize:both
+        内容始终显示在容器中央
+        （拖动右下角查看效果）
+      </div>
+    </div>
+
+    <div class="Center-Container">
+      <div class="Absolute-Center is-Image">
+        <img src="img/mi-logo.png" class="Absolute-Center" alt="">
+        图片(images)绝对居中(使用可变高度方式、height：atuo，来
+        保证图片所在内容块不被拉伸填满容器
+        )
+      </div>
+    </div>
+
+    <div class="Center-Container">
+      <div class="is-Negative">
+        margin负间距(negative margins)
+        绝对居中
+        通过设置margin负间距
+        使其水平垂直居中与容器内
+      </div>
+    </div>
+
+    <div class="Center-Container">
+      <div class="is-Transformed">
+        css3变形(transforms)绝对居中
+        内容块使用了css3变换之位移属性
+        transforms:translate(-50%,-50%)
+        使其居中
+        IE8不兼容
+      </div>
+    </div>
+
+    <div class="Center-Container is-Table">
+      <div class="Table-Cell">
+        <div class="Center-Block">
+          table-cell实现绝对居中
+          内层内容块使用display:table-cell
+          外层容器使用display:table
+          (其实外层可以省略，
+          只需要内层使用table-cell就行)
+        </div>
+      </div>
+    </div>
+
+    <div class="Center-Container is-Inline">
+      <div class="Center-Block">
+        inline-block实现绝对居中
+        内层内容块使用display:inline-block
+        vertical-align:middle和一个伪元素
+      </div>
+    </div>
+
+    <div class="Center-Container is-Flexbox">
+      <div class="is-Flexbox">
+        flexbox实现绝对居中
+      </div>
+    </div>
+  </main>
 </body>
+
 </html>
