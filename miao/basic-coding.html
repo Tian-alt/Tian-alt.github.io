@@ -197,7 +197,7 @@
     console.log("odd")
 </script>
 
-<script id="ch0104/04">
+<script id="ch0104/04" type="hidden">
   var nub = prompt()
   var ascii = nub.charCodeAt()
   if(ascii % 2 == 0)
@@ -398,14 +398,14 @@
     console.log(x / y) 
 </script>  
 
-<script id="ch0104/20" type="hidden">
+<script id="ch0104/20">
   var a = +prompt()
   var b = +prompt()
   var c = +prompt()
-  var x1 = (-b + Math.sqrt(b*b-4*a*c))/(2*a).toFixed(5)
-  var x2 = (-b - Math.sqrt(b*b-4*a*c))/(2*a).toFixed(5)
-  var real = -b / (2*a).toFixed(5)
-  var imagine = Math.sqrt(4*a*c-b*b) / (2*a)
+  var x1 = ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)
+  var x2 = ((-b - Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)
+  var real = (-b / (2*a)).toFixed(5)
+  var imagine = (Math.sqrt(4*a*c-b*b) / (2*a)).toFixed(5)
   if(b*b == 4*a*c)
     console.log("x1=x2=" + x1)
   else if(b*b > 4*a*c)
