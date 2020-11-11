@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 
-
-
-
 <script id="ch0103/01" type="hidden">
   var a = +prompt()
   var b = +prompt()
@@ -115,9 +112,7 @@
   var temp = x % 100  /* 用temp取出100的模，用以计算十位和个位 */
   var g = temp % 10 /* 取个位 */
   var h = parseInt(temp/10) /* 取十位 */
-  console.log(g.toString() + h.toString() + e.toString())
-  
-
+  console.log("" + g + h + e) /* 用字符串拼接 */
   
 </script>
 
@@ -371,16 +366,55 @@
     console.log("no")
 </script> 
 
-<script id="ch0104/17">
-  var a = +(prompt())
+<script id="ch0104/17" type="hidden">
+  var a = +prompt()
   var flag = true
-  if(a % 4 !== 0 && a % 100 == 0 && a % 400 != 0 && a % 3200 == 0  )
+  if(a % 4 != 0 || a % 100 == 0 && a % 400 != 0 || a % 3200 == 0  )
     flag = false
   if(flag)
     console.log("Y")
   else
     console.log("N")
 </script> 
+
+<script id="ch0104/18" type="hidden">
+  var x = +prompt()
+  var y = +prompt()
+  if (x <= 1 && x >= -1 && y <= 1 && y >= -1) {
+    console.log('yes');
+  } 
+  else {
+    console.log('no');
+  }
+</script>  
+
+<script id="ch0104/19" type="hidden">
+  var x = +prompt()
+  var y = +prompt()
+
+  var z = prompt()
+  if(y == 0)
+    console.log("Divided by zero!")
+  else if(z!="+" && z!="-" && z!="*" && z!="/")
+    console.log("Invalid operator!")
+  else if(z == "+")
+    console.log(x + y) 
+  else if(z == "-")
+    console.log(x - y) 
+  else if(z == "*")
+    console.log(x * y) 
+  else if(z == "/")
+    console.log(x / y) 
+</script>  
+
+<script id="ch0104/20" type="hidden">
+  var n = +prompt()
+  var x = +prompt()
+  var y = +prompt()
+  var consume = Math.ceil(y/x)
+  var remain = n - consume
+  console.log(remain)
+</script>  
 
 
 </head>
