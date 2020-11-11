@@ -105,15 +105,6 @@
   var c = n % 10;                /* 取个位，取个位必须在取十位之前，要计算十位，必须先减个位 */
   var b = (n % 100 - c) / 10;    /* 取十位 */
   console.log(c.toString() + b.toString() + a.toString()) /* 将结果转成字符串格式 */
-
-  /* 第二种方法 */
-  var x = +prompt()
-  var e = parseInt(x/100); /* 取百位 */
-  var temp = x % 100  /* 用temp取出100的模，用以计算十位和个位 */
-  var g = temp % 10 /* 取个位 */
-  var h = parseInt(temp/10) /* 取十位 */
-  console.log("" + g + h + e) /* 用字符串拼接 */
-  
 </script>
 
 <script id="ch0103/14" type="hidden">
@@ -180,7 +171,7 @@
   console.log(result)
 </script>
 
-<script id="ch0104/1" type="hidden">
+<script id="ch0104/01" type="hidden">
   var n = +prompt()
   if(n > 0)
     console.log("positive")
@@ -190,7 +181,7 @@
     console.log("negative")
 </script>
 
-<script id="ch0104/2" type="hidden">
+<script id="ch0104/02" type="hidden">
   var a = +prompt()
   if(a >= 0)
     console.log(a)
@@ -198,7 +189,7 @@
     console.log(-a.toFixed(2))
 </script>
 
-<script id="ch0104/3" type="hidden">
+<script id="ch0104/03" type="hidden">
   var a = +prompt()
   if(a % 2 == 0)
     console.log("even")
@@ -206,7 +197,7 @@
     console.log("odd")
 </script>
 
-<script id="ch0104/4" type="hidden">
+<script id="ch0104/04" type="hidden">
   var nub = +prompt()
   var ascii = nub.charCodeAt()
   if(ascii % 2 == 0)
@@ -215,7 +206,7 @@
     console.log("YES")
 </script>
 
-<script id="ch0104/5" type="hidden">
+<script id="ch0104/05" type="hidden">
   var a = +prompt()
   var b = +prompt()
   if(a == b)
@@ -226,7 +217,7 @@
     console.log("<")
 </script>
 
-<script id="ch0104/6" type="hidden">
+<script id="ch0104/06" type="hidden">
   var a = +prompt()
   if(a >= 10 && a <=99)
     console.log(1)
@@ -234,7 +225,7 @@
     console.log(0)
 </script>
 
-<script id="ch0104/7" type="hidden">
+<script id="ch0104/07" type="hidden">
   var a = +prompt()
   var b = +prompt()
   if(a >= 10 || b >=20)
@@ -243,7 +234,7 @@
     console.log(0)
 </script>
 
-<script id="ch0104/8" type="hidden">
+<script id="ch0104/08" type="hidden">
   var n = +prompt()
   if(n % 3 == 0 && n %5 == 0)
     console.log("YES")
@@ -251,7 +242,7 @@
     console.log("NO")
 </script>
 
-<script id="ch0104/9" type="hidden">
+<script id="ch0104/09" type="hidden">
   var n = +prompt()
   if(n % 3 == 0 && n % 5 == 0 && n % 7 == 0)
     console.log(3 + " " + 5 + " " + 7)
@@ -388,11 +379,11 @@
   }
 </script>  
 
-<script id="ch0104/19">
+<script id="ch0104/19" type="hidden">
   var x = +prompt()
   var y = +prompt()
+
   var z = prompt()
-  debugger
   if(y == 0)
     console.log("Divided by zero!")
   else if(z!="+" && z!="-" && z!="*" && z!="/")
@@ -407,7 +398,23 @@
     console.log(x / y) 
 </script>  
 
-<script id="ch0104/20" type="hidden">
+<script id="ch0104/21" type="hidden">
+  var a = +prompt()
+  var b = +prompt()
+  var c = +prompt()
+  var x1 = (-b + Math.sqrt(b*b-4*a*c))/(2*a).toFixed(5)
+  var x2 = (-b - Math.sqrt(b*b-4*a*c))/(2*a).toFixed(5)
+  var real = -b / (2*a).toFixed(5)
+  var imagine = Math.sqrt(4*a*c-b*b) / (2*a)
+  if(b*b == 4*a*c)
+    console.log("x1=x2=" + x1)
+  else if(b*b > 4*a*c)
+    console.log("x1=" + x1 ,"x2=" + x2)
+  if(b*b < 4*a*c)
+    console.log("x1=" + real + "+" + imagine +"i" ,"x2=" + real + "-" + imagine +"i")
+</script>  
+
+<script id="ch0104/21" type="hidden">
   var n = +prompt()
   var x = +prompt()
   var y = +prompt()
@@ -415,6 +422,7 @@
   var remain = n - consume
   console.log(remain)
 </script>  
+
 
 
 </head>
