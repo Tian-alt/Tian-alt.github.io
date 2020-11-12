@@ -399,19 +399,20 @@
 </script>  
 
 <script id="ch0104/20" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var c = +prompt()
-  var x1 = ((-b + Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)
-  var x2 = ((-b - Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(5)
-  var real = (-b / (2*a)).toFixed(5)
-  var imagine = (Math.sqrt(4*a*c-b*b) / (2*a)).toFixed(5)
-  if(b*b == 4*a*c)
+  var a = Number(prompt());
+  var b = Number(prompt());
+  var c = Number(prompt());
+  var x1 = ((-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a)).toFixed(5);
+  var x2 = ((-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a)).toFixed(5);
+  var real = (-b / (2 * a)).toFixed(5);
+  var imaginary = (Math.sqrt(4 * a * c - b * b) / (2 * a)).toFixed(5);
+  if(b * b == 4 * a * c) {
     console.log("x1=x2=" + x1)
-  else if(b*b > 4*a*c)
-    console.log("x1=" + x1 ,"x2=" + x2)
-  else(b*b < 4*a*c)
-    console.log("x1=" + real + "+" + imagine +"i" + ";" ,"x2=" + real + "-" + imagine +"i")
+  }else if(b * b > 4 * a * c) {
+    console.log("x1=" + x1,"x2=" + x2)
+  }else {
+    console.log("x1=" + real + "+" + imaginary + "i"+ ";" +"x2=" + real + "-" + imaginary + "i")
+  }
 </script>  
 
 <script id="ch0104/21" type="hidden">
@@ -663,7 +664,7 @@
     distance += jump + h
     h = jump
   }
-  console.log(distance.toFixed(4),jump.toFixed(7))
+  console.log(distance,jump.toFixed(7))
 </script>  
 
 <script id="ch0105/21" type="hidden">
@@ -674,7 +675,7 @@
       N = parseInt(N/2)
     }
     else{
-      console.log(N + "*3+1=" + N*3+1)
+      console.log(N + "*3+1=" + (N*3+1))
       N = parseInt(N*3 + 1)
     }
   }
@@ -769,9 +770,9 @@
 
 <script id="ch0105/28" type="hidden">
   var integer = +prompt()
-  while (uip > 0) {
+  while (integer > 0) {
     console.log(integer % 10)
-    uip = Math.floor(integer / 10)
+    integer = Math.floor(integer / 10)
   }
 </script>  
 
@@ -818,7 +819,7 @@
   console.log("NO")
 </script>  
 
-<script id="ch0105/31" type="hidden">
+<script id="ch0105/31">
   var N = +prompt()
   var M = +prompt()
   var arr = []
@@ -826,7 +827,6 @@
   for(var i = 1; i <=  N; ++i){
     arr[i] = 1
   }
-  debugger
   /* 判断人的次序 */
   for(var i = 1; i <= M; ++i){
     /* 判断灯的次序 */
