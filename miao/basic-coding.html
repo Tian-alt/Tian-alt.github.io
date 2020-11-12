@@ -664,7 +664,7 @@
     distance += jump + h
     h = jump
   }
-  console.log(distance,jump.toFixed(7))
+  console.log((distance - jump).toFixed(4),jump.toFixed(7))
 </script>  
 
 <script id="ch0105/21" type="hidden">
@@ -682,16 +682,16 @@
   console.log("End")
 </script>   
 
-<script id="ch0105/22" type="hidden">
+<script id="ch0105/22">
   var budget = []
   var sum = storage = 0
   for(var i = 0; i < 12; ++i){
     budget[i] = +prompt()
   }
-  debugger
   for(var i =0; i<12; ++i){
     var diff = sum + 300 - budget[i]
     var mul = parseInt(diff / 100)
+    debugger
     if(sum + 300 < budget[i]){
       console.log(-(i+1)) 
       break
@@ -701,7 +701,7 @@
       sum += 300 - budget[i] - mul*100
     }
     if(i == 11 )
-      console.log(storage +=  storage*0.2) 
+      console.log(storage += sum + storage*0.2) 
   } 
 </script>  
 
@@ -819,7 +819,7 @@
   console.log("NO")
 </script>  
 
-<script id="ch0105/31">
+<script id="ch0105/31" type="hidden">
   var N = +prompt()
   var M = +prompt()
   var arr = []
