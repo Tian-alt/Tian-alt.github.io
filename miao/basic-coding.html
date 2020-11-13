@@ -1015,14 +1015,15 @@
   console.log(sum)
 </script>
 
-<script id="ch0105/40">
-  var n = +prompt()
+<script id="ch0105/41" type="hidden">
+  var L = +prompt()
+  var R = +prompt()
   var sum = 0
-  for(var i = 0; i <= n; ++i){
+  for(var i = L; i <= R; ++i){
     var j = i
     while(j > 0){
       var digit = j % 10
-      if(digit == 1)
+      if(digit == 2)
         ++sum
       j = (j - digit ) / 10
     }
