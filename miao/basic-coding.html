@@ -985,6 +985,31 @@
   
 </script>
 
+<script id="ch0105/39">
+  var n = +prompt()
+  var sum = 0
+  for(var i = 0; i <= n; ++i){
+    var flag = true
+    var one = i % 10
+    var ten = (i - one) / 10 % 10
+    if(i % 7 == 0 || one == 7 || ten == 7)
+      flag = false
+    if(flag)
+      sum += i*i
+  }
+  console.log(sum)
+  
+  
+</script>
+
+
+
+
+
+
+
+
+
 
 
 
