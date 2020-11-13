@@ -661,20 +661,25 @@
   var jump = 0
   for(var i=1; i<11; ++i){
     jump = h*0.5
+    /* distance算第i次落地+弹跳距离 */
     distance += jump + h
+    /* 下一次的落地高度等于上一次的弹跳高度 */
     h = jump
   }
+  /* 输出为第十次落地的高度(不算第十次弹起),所以应该减去第十次的弹起高度 */
   console.log((distance - jump).toFixed(4),jump.toFixed(7))
 </script>  
 
 <script id="ch0105/21" type="hidden">
   var N = +prompt()
+  /* 如果N = 1, 直接跳出循环,否则循环输出 */
   while(N != 1){
     if(N % 2 == 0){
       console.log(N + "/2=" + N/2 )
       N = parseInt(N/2)
     }
     else{
+      /* 字符串拼接时,注意括号*/
       console.log(N + "*3+1=" + (N*3+1))
       N = parseInt(N*3 + 1)
     }
@@ -684,22 +689,28 @@
 
 <script id="ch0105/22" type="hidden">
   var budget = []
+  /* sum表示手中钱的总和,storage表示存的钱 */
   var sum = storage = 0
+  /* 把预算存入数组 */
   for(var i = 0; i < 12; ++i){
     budget[i] = +prompt()
   }
   for(var i =0; i<12; ++i){
+    /* diff表示手上钱 + 给的300 - 当月预算 */
     var diff = sum + 300 - budget[i]
+    /* diff/100,如果大于1,可以存钱,如果小于1,当月不存 */
     var mul = parseInt(diff / 100)
-    debugger
+    /* 如果手上的钱 + 300 < 当月预算, 则表示当月预算不足,输出月份 */
     if(sum + 300 < budget[i]){
       console.log(-(i+1)) 
       break
     }
+    /* 将整百存入storage,将零头存入sum */
     else{
       storage += mul*100
       sum += 300 - budget[i] - mul*100
     }
+    /* 到达十一月,将sum手中的钱 + 在妈妈那里存的钱*0.2一同取出 */
     if(i == 11 )
       console.log(storage += sum + storage*0.2) 
   } 
@@ -739,13 +750,8 @@
   console.log(max)
 </script>  
 
-<script id="ch0105/25">
-  for(var i = 91; i <= 399; ++i){
-    while (i > 0) {
-    console.log(integer % 10)
-    integer = Math.floor(integer / 10)
-    }
-  }
+<script id="ch0105/25" type="hidden">
+  
 </script>  
 
 <script id="ch0105/26" type="hidden">
@@ -826,7 +832,7 @@
   console.log("NO")
 </script>  
 
-<script id="ch0105/31">
+<script id="ch0105/31" type="hidden">
   var N = +prompt()
   var M = +prompt()
   var arr = []
@@ -950,7 +956,9 @@
       arr[j] = +prompt()
     }
     for(var k=0; k <= hst; ++k ){
-      /* 依次用项数乘以系数 */
+      /* 依次用项数乘以系b数 */
+      if(hst != 0 && (hst-k) == 0)
+        break
       console.log(arr[k]*(hst-k))
     }
   }
