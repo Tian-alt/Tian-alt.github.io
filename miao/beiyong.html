@@ -1,136 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-<script id="ch0105/32" type="hidden">
-  var n = +prompt()
-  var p = nextp = 1
-  var q = nextq = 2
-  var sum = 0
-  for (var i = 0; i < n; ++i) {
-    sum += q / p
-    nextp = q
-    nextq = p + q
-    q = nextq
-    p = nextp
-  }
-  console.log(sum.toFixed(4))
-</script>
-
-<script id="ch0105/33" type="hidden">
-  var n = +prompt()
-  var sum = 0
-  for(var i = 1; i <= n; ++i){
-    if(i%2 != 0)
-      sum += 1/i
-    else
-      sum -= 1/i
-  }
-  console.log(sum.toFixed(4))
-</script>
-
-<script id="ch0105/34" type="hidden">
-  var n = +prompt()
-  var sum = 0
-  var asum = 1
-  // debugger
-  for(var i=1; i <= n; ++i){
-    for(var j=1; j <= i; ++j){
-      if(j == 1)
-        asum = 1
-      asum *= (j)
+  <script id="ch0105/31">
+   
     }
-    sum += asum
-  }
- console.log(sum)
-</script>
-
-<script id="ch0105/35" type="hidden">
-  var n = +prompt()
-  var sum = 1
-  function fac (i){
-    var asum = 1
-    for(var j=1; j <= i; ++j){
-      if(j == 1)
-        asum = 1
-      asum *= j
-    }
-    return asum
-  }
-  for(var i = 1; i <= n; ++i){
-    sum += 1 / fac(i)
-  }
-  console.log(sum.toFixed(10))
-</script>
-
-<script id="ch0105/36" type="hidden">
-  var x = +prompt()
-  var n = +prompt()
-  var sum = 0
-  for(var i = n; i >= 0; --i){
-    sum += x**i
-  }
-  console.log(sum.toFixed(2))
-</script>
-
-<script id="ch0105/37" type="hidden">
-  var M = +prompt()
-  var N = +prompt()
-  var X = +prompt()
+  </script> 
   
-</script>
-
-<script id="ch0105/38">
-  /* 取得示例数 */
-  var n = +prompt()
-  var arr = []
-  for(var i=0; i < n; ++i){
-    /* 输入最高项 */
-    var hst = +prompt()
-    /* 依次把项数输入数组 */
-    for(var j=0; j <= hst; ++j){
-      arr[j] = +prompt()
-    }
-    for(var k=0; k <= hst; ++k ){
-      /* 依次用项数乘以系数 */
-      console.log(arr[k]*(hst-k))
-    }
-  }
-  
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </head>
-
 <body>
-
+  
 </body>
-
 </html>
-<script>
-
-</script>
