@@ -734,17 +734,22 @@
 
 <script id="ch0105/24" type="hidden">
   var n = +prompt()
+  /* max记录持续最长时间 */
   var max = 0
+  /* span记录持续时间 */
   var span = 0
   for(var i = 0; i < n; ++i){
     var shrink = +prompt()
     var diastole = +prompt()
     if(shrink >= 90 && shrink <= 140 && diastole >= 60 && diastole <= 90){
+      /* 如果正常,持续时间+1 */
       span += 1
+      /* 如果持续时间大于最长持续时间,span赋值给max */
       if(span > max)
         max = span
     }
     else
+      /* 不但不符合条件,span归零*/
       span = 0
   }
   console.log(max)
@@ -768,8 +773,6 @@
   }
   console.log(sum)
 </script>  
-
-
 
 <script id="ch0105/27" type="hidden">
   var K = +prompt()
@@ -860,9 +863,17 @@
       } 
     }
   }
+  debugger
   for(var i = 1; i <= N; ++i){
-    if(arr[i] == 0)
-      console.log(i + ",")
+    /* 1号把灯关了之后
+      后面的人肯定是不会再改变灯的状态的(倍数分别是2 3 ..不可能取得1)
+      所以第一个灯肯定是关的,直接输出1
+      逗号问题的话直接在后面的数之前加,就可以
+      */
+    if(i = 1)
+      console.log(1)
+    else(arr[i] == 0)
+      console.log("," + i)
   }
 </script>  
 
@@ -944,7 +955,7 @@
   
 </script>
 
-<script id="ch0105/38">
+<script id="ch0105/38" type="hidden">
   /* 取得示例数 */
   var n = +prompt()
   var arr = []
