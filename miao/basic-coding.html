@@ -756,7 +756,16 @@
 </script>  
 
 <script id="ch0105/25" type="hidden">
-  
+  for(var n = 1; n < 999; ++n){
+    var one7 = n % 7
+    var ten7 = (n - one7) / 7 % 7
+    var hundred7 = (n - one7 - ten7*7) / 49 % 7
+    var one9 = n % 9
+    var ten9 = (n - one9) / 9 % 9
+    var hundred9 = (n - one9 - ten9*9) / 81 % 9
+    if(one7 == hundred9 && ten7 ==ten9 && hundred7 == one9)
+    }
+    console.log(n, "" + one7 + ten7 + hundred7, "" + one9 + ten9 + hundred9)
 </script>  
 
 <script id="ch0105/26" type="hidden">
