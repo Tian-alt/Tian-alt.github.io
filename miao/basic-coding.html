@@ -985,7 +985,7 @@
   
 </script>
 
-<script id="ch0105/39">
+<script id="ch0105/39" type="hidden">
   var n = +prompt()
   var sum = 0
   for(var i = 0; i <= n; ++i){
@@ -998,8 +998,36 @@
       sum += i*i
   }
   console.log(sum)
-  
-  
+</script>
+
+<script id="ch0105/40" type="hidden">
+  var n = +prompt()
+  var sum = 0
+  for(var i = 0; i <= n; ++i){
+    var j = i
+    while(j > 0){
+      var digit = j % 10
+      if(digit == 1)
+        ++sum
+      j = (j - digit ) / 10
+    }
+  }
+  console.log(sum)
+</script>
+
+<script id="ch0105/40">
+  var n = +prompt()
+  var sum = 0
+  for(var i = 0; i <= n; ++i){
+    var j = i
+    while(j > 0){
+      var digit = j % 10
+      if(digit == 1)
+        ++sum
+      j = (j - digit ) / 10
+    }
+  }
+  console.log(sum)
 </script>
 
 
