@@ -1144,17 +1144,20 @@
 </script>
 
 <script id="ch0105/45">
-  var L = +prompt()
-  var R = +prompt()
+  var n  = +prompt()
   var sum = 0
-  for(var i = L; i <= R; ++i){
-    var j = i
-    while(j > 0){
-      var digit = j % 10
-      if(digit == 2)
-        ++sum
-      j = (j - digit ) / 10
+  /* day记录连续天数 */
+  var day = 0
+  /* i记录天数 */
+  for(var i = 1; i <= n; ++i){
+    day ++
+    /* j在连续天数内循环,每次循环金币总数+连续天数 */
+    for(var j = 1; j <= day; ++j){
+      sum += day
     }
+    /* 此时已经过了day天,i应该加上day天,
+    又因为for循环末尾要+1,所以这里先-1 */
+    i += day - 1
   }
   console.log(sum)
 </script>
