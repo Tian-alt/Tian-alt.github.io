@@ -763,8 +763,12 @@
     var one9 = n % 9
     var ten9 = (n - one9) / 9 % 9
     var hundred9 = (n - one9 - ten9*9) / 81 % 9
-    if(one7 == hundred9 && ten7 ==ten9 && hundred7 == one9)
-      console.log(n, "" + one7 + ten7 + hundred7, "" + one9 + ten9 + hundred9)
+    if(one7 == hundred9 && ten7 ==ten9 && hundred7 == one9){
+      console.log(n)
+      console.log(one7 + ten7*10 + hundred7*100)
+      console.log(one9 + ten9*10 + hundred9*100)
+      break
+    } 
   }
 </script>  
 
@@ -874,15 +878,15 @@
   }
   debugger
   for(var i = 1; i <= N; ++i){
-    /* 1号把灯关了之后
-      后面的人肯定是不会再改变灯的状态的(倍数分别是2 3 ..不可能取得1)
-      所以第一个灯肯定是关的,直接输出1
-      逗号问题的话直接在后面的数之前加,就可以
+    /* 
+      逗号问题始终过不了,只能出此下策,判断最后是否是9,
+      是的话只输出数字,否则输出数字+,
+      想想看还有没有其他解决办法
       */
-      if(i == 1)
-        console.log(1)
-    else if(arr[i] == 0)
-      console.log("," + i)
+      if(i == 9)
+        console.log(i)
+      else if(arr[i] == 0)
+        console.log(i + ",")
   }
 </script>  
 
