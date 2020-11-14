@@ -4,29 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script id="ch0105/31">
-   let [row, col, dec, sol] = [+prompt(), +prompt(), prompt(), +prompt()]
-//缺陷 嵌套太深
-for (let r = 0; r < row; r++) {
-  let str = ''
-  for (let c = 0; c < col; c++) {
-    if (r == 0 || r == row - 1) {
-      str += dec
-    } else {
-        if (sol == 1) {
-          str += dec
-        }else {
-          if(c == 0 || c == col -1) {
-            str += dec
-          }else {
-            str += ' '
-          }
-        }
+  <script id="ch0105/25">
+    var decimal = 1 //十进制数
+    var u7 //七进制个位
+    var t7 //七进制十位
+    var h7 //七进制百位
+    var u9 //九进制个位
+    var t9 //九进制十位
+    var h9 //九进制百位
+    while (true) {
+      u7 = decimal % 7
+      t7 = (decimal - u7) / 7 % 7
+      h7 = ((decimal - u7) / 7 - t7) / 7
+      u9 = decimal % 9
+      t9 = (decimal - u9) / 9 % 9
+      h9 = ((decimal - u9) / 9 - t9) / 9
+      if (h7 < 7 && h9 < 9 && u7 == h9 && t7 == t9 && h7 == u9) {
+        // console.log(decimal)
+        // console.log("" + h7 + t7 + u7)
+        // console.log("" + h9 + t9 + u9)
+        break
+      } else {
+        decimal++
+      }
     }
-  }
-  console.log(str)
-}
-  
+    console.log("（不提供）");
+  </script>
 </head>
 <body>
   
