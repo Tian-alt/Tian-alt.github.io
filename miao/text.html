@@ -6,21 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script>
-    function flattenDeep(ary) {
-      var res = new Array
-      var recursion = ary => {
-        for (let i = 0; i < ary.length; ++i) {
-          if (!(ary[i] instanceof Array))
-            res.push(ary[i])
-          else
-            recursion(ary[i])
-        }
-        return res
+    var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
+    function isEqual(a, b) {
+      if (a === b) return true;
+
+      if (a == null || typeof a != "object" ||
+        b == null || typeof b != "object")
+        return false;
+
+      var propsInA = 0,
+        propsInB = 0;
+
+      for (var prop in a)
+        propsInA += 1;
+
+      for (var prop in b) {
+        propsInB += 1;
+        if (!(prop in a) || !isEqual(a[prop], b[prop]))
+          return false;
       }
-      return recursion(ary)
+
+      return propsInA == propsInB;
+    }
+
+    function differenceWidth(ary, values, iteratee) {
+      var res = []
+      for (let i = 0; i < ary.length; ++i) {
+        let flag = false
+        for (let j = 0; j < values.length; ++j) {
+          if (iteratee(ary[i], values[j])) {
+            flag = true
+            break
+          }
+        }
+        if (!flag)
+          res.push(ary[i])
+      }
+      return res
     }
     debugger
-    console.log(flattenDeep([1, [2, [3, [4]], 5]]))
+    console.log(differenceWidth(objects, [{ 'x': 1, 'y': 2 }], isEqual))
   </script>
 </head>
 

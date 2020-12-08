@@ -86,7 +86,7 @@ var lkwavestian = function () {
 
   function findIndex(ary, predicate, fromIndex = 0) {
     for (let i = fromIndex; i < ary.length; ++i) {
-      if (predicate(ary[i]))
+      if (predicate(ary[i], i, ary))
         return i
     }
     return -1
@@ -94,7 +94,7 @@ var lkwavestian = function () {
 
   function findLastIndex(ary, predicate, fromIndex = ary.length - 1) {
     for (let i = fromIndex; i >= 0; --i) {
-      if (predicate(ary[i]))
+      if (predicate(ary[i], i, ary))
         return i
     }
     return -1
@@ -270,7 +270,76 @@ var lkwavestian = function () {
     return sum
   }
 
+  function difference(ary, values) {
+    var res = []
+    var map = new Map()
+    for (let i = 0; i < values.length; ++i) {
+      map.set(values[i], true)
+    }
+    for (let j = 0; j < ary.length; ++j) {
+      if (!map.has(ary[j]))
+        res.push(ary[j])
+    }
+    return res
+  }
+
+  function differenceBy(ary, values, iteratee) {
+    var res = []
+    var map = new Map()
+    for (let i = 0; i < values.length; ++i) {
+      map.set(iteratee(values[i]), true)
+    }
+    for (let j = 0; j < ary.length; ++j) {
+      if (!map.has(iteratee(ary[j])))
+        res.push(ary[j])
+    }
+    return res
+  }
+
+  function isEqual(a, b) {
+    if (a === b) return true;
+
+    if (a == null || typeof a != "object" ||
+      b == null || typeof b != "object")
+      return false;
+
+    var propsInA = 0,
+      propsInB = 0;
+
+    for (var prop in a)
+      propsInA += 1;
+
+    for (var prop in b) {
+      propsInB += 1;
+      if (!(prop in a) || !isEqual(a[prop], b[prop]))
+        return false;
+    }
+
+    return propsInA == propsInB;
+  }
+
+  function differenceWidth(ary, values, iteratee) {
+    var res = []
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < values.length; ++j) {
+        if (iteratee(ary[i], values[j])) {
+          flag = true
+          break
+        }
+      }
+      if (!flag)
+        res.push(ary[i])
+    }
+    return res
+  }
+
   return {
+    differenceWidth,
+    isEqual,
+    differenceWidth,
+    differenceBy,
+    difference,
     sumBy,
     sum,
     minBy,
