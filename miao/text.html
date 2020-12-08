@@ -5,45 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script link="./js/lena.js">
-  </script>
-  <script link=d>
-    function find(ary, predicate) {
-      for(let i = 0 ; i < ary.length; ++i) {
-        if(predicate(ary[i], i,))
-          return ary[i]
+  <script>
+    function flattenDeep(ary) {
+      var res = new Array
+      var recursion = ary => {
+        for (let i = 0; i < ary.length; ++i) {
+          if (!(ary[i] instanceof Array))
+            res.push(ary[i])
+          else
+            recursion(ary[i])
+        }
+        return res
       }
+      return recursion(ary)
     }
-
-    function every(ary, text) {
-      for(let i = 0; i < ary.length; ++i) {
-        if(!text(ary(i)))
-          return false
-      }
-      return true
-    }
-
-    function some(ary, test) {
-
-      for(let i = 0; i < ary.length; ++i) {
-        if(text(ary(i)))
-          return true
-      }
-      return false
-    }
-
-    function pow(x, y) {
-      if(y == 0)
-        return 1
-      else if(y & 1 == 0)
-        return pow(x * x, y >> 1)
-      else
-        return pow(x * x, y >>1) * x
-    }
-
-    console.log(average(ancestry.filter(p => p.sex == "m").map(p => p.died - p.born)))
-
-    // console.log(firstMissingPositive(a))
+    debugger
+    console.log(flattenDeep([1, [2, [3, [4]], 5]]))
   </script>
 </head>
 
