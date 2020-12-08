@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function createNode(val) {
+      return {
+        val: val,
+        next: null,
+      }
+    }
+
+    function ListNode(val, next) {
+      this.val = (val === undefined ? 0 : val)
+      this.next = (next === undefined ? null : next)
+    }
+
+    function arrayToList(ary) {
+      if (ary.length == 0) return null
+      var head = createNode(ary[0])
+      head.next = arrayToList(ary.slice(1))
+      return head
+    }
+
+    function listToArray2(l) {
+      if (l == null) return []
+      var tailAry = listToArray2(l.next)
+      tailAry.unshift(l.val)
+      return tailAry
+    }
+
+    let a = [1, 2, 3, 4, 5, 6, 7]
+    let b = [1, 4, 5]
+
+    var splitListToParts = function (root, k) {
+      let len = 0 //计算链表长度
+      let p = root
+      while (p) {
+        len++
+        p = p.next
+      }
+      p = root
+      let width = Math.floor(len / k) // 一组 width个
+      let rem = len % k //前 rem 组 +1
+      let res = new Array(k).fill(null)
+      for (let i = 0; i < k; ++i) {
+        res[i] = p
+        let size = width + (rem > 0 ? 1 : 0) //注意优先级
+        rem--
+        for (let j = 0; j < size - 1; ++j) { //向后移动 size 个位置
+          p = p.next
+        }
+        let after = p ? p.next : null
+        if (p)
+          p.next = null
+        p = after
+      }
+      return res
+    };
+
+    debugger
+    console.log(splitListToParts(arrayToList(a), 3))
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

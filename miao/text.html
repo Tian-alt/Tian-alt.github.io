@@ -1,424 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script link="./js/lena.js">
+  </script>
+  <script link=d>
+    function find(ary, predicate) {
+      for(let i = 0 ; i < ary.length; ++i) {
+        if(predicate(ary[i], i,))
+          return ary[i]
+      }
+    }
 
-<script id="ch0103/01" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var result = a + b
-  console.log(result)
-</script>
+    function every(ary, text) {
+      for(let i = 0; i < ary.length; ++i) {
+        if(!text(ary(i)))
+          return false
+      }
+      return true
+    }
 
-<script id="ch0103/02" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var c = +prompt()
-  var result = (a + b) * c
-  console.log(result)
-</script>
+    function some(ary, test) {
 
-<script id="ch0103/03" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var c = +prompt()
-  var result = (a + b) / c
-  console.log(parseInt(result))
-</script>
+      for(let i = 0; i < ary.length; ++i) {
+        if(text(ary(i)))
+          return true
+      }
+      return false
+    }
 
-<script id="ch0103/04" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var quo = parseInt(a/b)
-  var rem = a % b
-  console.log(quo, rem)
-</script>
+    function pow(x, y) {
+      if(y == 0)
+        return 1
+      else if(y & 1 == 0)
+        return pow(x * x, y >> 1)
+      else
+        return pow(x * x, y >>1) * x
+    }
 
-<script id="ch0103/05" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var result = (a / b).toFixed(9)
-  console.log(result)
-</script>
+    console.log(average(ancestry.filter(p => p.sex == "m").map(p => p.died - p.born)))
 
-<script id="ch0103/06" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var result = ((b / a)*100).toFixed(3)
-  console.log(result + "%")
-</script>
-
-<script id="ch0103/07" type="hidden">
-  var x = +prompt()
-  var a = +prompt()
-  var b = +prompt()
-  var c = +prompt()
-  var d = +prompt()
-  var result = a*x*x*x + b*x*x + c*x +d
-  console.log(result.toFixed(7))
-</script>
-
-<script id="ch0103/08" type="hidden">
-  var f = +prompt()
-  var c =  5 * (f-32) / 9
-  console.log(c.toFixed(5))
-</script>
-
-<script id="ch0103/09" type="hidden">
-  var r = +prompt()
-  var pi = 3.14159
-  var dia = 2*r
-  var cir = 2*pi*r
-  var area = pi*r*r
-  console.log(dia.toFixed(4) ,cir.toFixed(4) ,area.toFixed(4))
-</script>
-
-<script id="ch0103/10" type="hidden">
-  var r1 = +prompt()
-  var r2 = +prompt()
-  var result = 1/(1/r1 + 1/r2)
-  console.log(result.toFixed(2))
-</script>
-
-<script id="ch0103/11" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var result = a%b
-  /* 存在问题：没有办法控制0的个数 */
-  console.log(parseFloat(result).toFixed(4))
-</script>
-
-<script id="ch0103/12" type="hidden">
-  var r = +prompt()
-  var pi = 3.14
-  var result = 4/3*pi*r**3
-  /* 存在问题：没有办法控制0的个数 */
-  console.log(parseFloat(result).toFixed(2))
-</script>
-
-<script id="ch0103/13" type="hidden">
-  /* 第一种方法 */
-  var n = +prompt()
-  var a = parseInt(n/100); /* 取百位 */
-  var c = n % 10;                /* 取个位，取个位必须在取十位之前，要计算十位，必须先减个位 */
-  var b = (n % 100 - c) / 10;    /* 取十位 */
-  console.log(c.toString() + b.toString() + a.toString()) /* 将结果转成字符串格式 */
-
-  /* 第二种方法 */
-  var x = +prompt()
-  var e = parseInt(x/100); /* 取百位 */
-  var temp = x % 100  /* 用temp取出100的模，用以计算十位和个位 */
-  var g = temp % 10 /* 取个位 */
-  var h = parseInt(temp/10) /* 取十位 */
-  console.log("" + g + h + e) /* 用字符串拼接 */
-  
-</script>
-
-<script id="ch0103/14" type="hidden">
-  var h = +prompt()
-  var r = +prompt()
-  var pi = 3.14159
-  var volume = pi*r*r*h/1000
-  var result = parseInt(20/volume)
-  if(result*volume < 20 )
-    result += 1
-  console.log(result)
-</script>
-
-<script id="ch0103/15" type="hidden">
-  var n = +prompt()
-  var x = +prompt()
-  var y = +prompt()
-  var consume = parseInt(y/x)
-  if(consume*x < y)
-    consume += 1
-  var result = n - consume
-  console.log(result)
-</script>
-
-<script id="ch0103/16" type="hidden">
-  var xa = +prompt()
-  var ya = +prompt()
-  var xb = +prompt()
-  var yb = +prompt()
-  var result = Math.sqrt((xa-xb)**2 + (ya-yb)**2)
-  console.log(result.toFixed(3))
-</script>
-
-<script id="ch0103/17" type="hidden">
-  var x1 = +prompt()
-  var y1 = +prompt()
-  var x2 = +prompt()
-  var y2 = +prompt()
-  var x3 = +prompt()
-  var y3 = +prompt()
-  var result = (x1*y2-x1*y3+x2*y3-x2*y1+x3*y1-x2*y2) / 2
-  console.log(result.toFixed(2))
-</script>
-
-<script id="ch0103/18" type="hidden">
-  var a1 = +prompt()
-  var a2 = +prompt()
-  var n = +prompt()
-  var diff = a2 - a1
-  var result = a1 + diff*(n-1)
-  console.log(result)
-</script>
-
-<script id="ch0103/19" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var result = a * b
-  console.log(result)
-</script>
-
-<script id="ch0103/20" type="hidden">
-  var n = +prompt()
-  var result = 2 ** n
-  console.log(result)
-</script>
-
-<script id="ch0104/1" type="hidden">
-  var n = +prompt()
-  if(n > 0)
-    console.log("positive")
-  else if(n == 0)
-    console.log("zero")
-  else
-    console.log("negative")
-</script>
-
-<script id="ch0104/2" type="hidden">
-  var a = +prompt()
-  if(a >= 0)
-    console.log(a)
-  else
-    console.log(-a.toFixed(2))
-</script>
-
-<script id="ch0104/3" type="hidden">
-  var a = +prompt()
-  if(a % 2 == 0)
-    console.log("even")
-  else 
-    console.log("odd")
-</script>
-
-<script id="ch0104/4" type="hidden">
-  var nub = +prompt()
-  var ascii = nub.charCodeAt()
-  if(ascii % 2 == 0)
-    console.log("NO")
-  else 
-    console.log("YES")
-</script>
-
-<script id="ch0104/5" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  if(a == b)
-    console.log("=")
-  else if(a > b)
-    console.log(">")
-  else
-    console.log("<")
-</script>
-
-<script id="ch0104/6" type="hidden">
-  var a = +prompt()
-  if(a >= 10 && a <=99)
-    console.log(1)
-  else
-    console.log(0)
-</script>
-
-<script id="ch0104/7" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  if(a >= 10 || b >=20)
-    console.log(1)
-  else
-    console.log(0)
-</script>
-
-<script id="ch0104/8" type="hidden">
-  var n = +prompt()
-  if(n % 3 == 0 && n %5 == 0)
-    console.log("YES")
-  else
-    console.log("NO")
-</script>
-
-<script id="ch0104/9" type="hidden">
-  var n = +prompt()
-  if(n % 3 == 0 && n % 5 == 0 && n % 7 == 0)
-    console.log(3 + " " + 5 + " " + 7)
-  else if(n % 3 == 0 && n % 5 == 0)
-    console.log(3 + " " + 5)
-  else if(n % 3 == 0 && n % 7 == 0) 
-    console.log(3 + " " + 7)
-  else if(n % 7 == 0 && n % 5 == 0)
-    console.log(7 + " " + 5)
-  else if(n % 7 == 0)
-    console.log(7)
-  else if(n % 5 == 0)
-    console.log(5)
-  else if(n % 3 == 0)
-    console.log(3)
-  else
-    console.log("n")
-</script>
-
-<script id="ch0104/10" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  if(a < 60&& b >= 60)
-    console.log(1)
-  else if(b < 60&& a >= 60)
-    console.log(1)
-  else
-    console.log(0)
-</script>
-
-<script id="ch0104/11" type="hidden">
-  var a = +prompt()
-  if(a % 2 == 1 && a != 7)
-    console.log("NO")
-  else
-    console.log("YES")
-</script>
-
-<script id="ch0104/12" type="hidden">
-  var dst = +prompt()
-  var walktime = dst/1.2
-  var balktime = 27 + 23 + dst/3
-  if(walktime == balktime)
-    console.log("All")
-  else if(walktime < balktime)
-    console.log("Walk")
-  if(walktime > balktime)
-    console.log("Bike")
-</script>
-
-<script id="ch0104/13" type="hidden">
-  var x = +prompt()
-  var result;
-  if(x >= 0 && x < 5){
-    result = -x + 2.5
-    console.log(result.toFixed(3))
-  }
-  else if(x >=5 && x < 10){
-    result = 2 - 1.5*(x - 3)**2
-    console.log(result.toFixed(3))
-  }
-    
-  else{
-    result = x/2 - 1.5
-    console.log(result.toFixed(3))
-  }
-</script>
-
-<script id="ch0104/14" type="hidden">
-  var weight = +prompt()
-  var exp = +prompt()
-  var cost
-  if(weight < 1000 && exp == "n")
-    cost = 8
-  else if(weight < 1000 && exp == "y")
-    cost = 8 + 5
-  else if(weight > 1000 && exp == "n")
-    cost = 8 + Math.ceil((weight - 1000)/500)*4
-  else
-    cost = 8 + Math.ceil((weight - 1000)/500)*4 + 5
-  console.log(cost)
-</script>
-
-<script id="ch0104/15" type="hidden">
-  var a = +prompt()
-  var b = +prompt()
-  var c = +prompt()
-  if(a > b && b > c)
-    console.log(a)
-  else if(a > b && b < c){
-    if(a > c)
-      console.log(a)
-    else
-      console.log(c)
-  }
-  else if(a < b && b > c)
-    console.log(b)
-  else if(a < b && b < c)
-    console.log(c)
-</script>
-
-<script id="ch0104/16" type="hidden">
-  var a = +(prompt())
-  var b = +(prompt())
-  var c = +(prompt())
-  var label = false
-  if((a + b) > c && (b + c) > a && (a + c) > b && (a - b) < c && (a - c) < b && (b - c) < a)
-    label = true
-  if(label)
-    console.log("yes")
-  else
-    console.log("no")
-</script> 
-
-<script id="ch0104/17" type="hidden">
-  var a = +prompt()
-  var flag = true
-  if(a % 4 != 0 || a % 100 == 0 && a % 400 != 0 || a % 3200 == 0  )
-    flag = false
-  if(flag)
-    console.log("Y")
-  else
-    console.log("N")
-</script> 
-
-<script id="ch0104/18" type="hidden">
-  var x = +prompt()
-  var y = +prompt()
-  if (x <= 1 && x >= -1 && y <= 1 && y >= -1) {
-    console.log('yes');
-  } 
-  else {
-    console.log('no');
-  }
-</script>  
-
-<script id="ch0104/19" type="hidden">
-  var x = +prompt()
-  var y = +prompt()
-
-  var z = prompt()
-  if(y == 0)
-    console.log("Divided by zero!")
-  else if(z!="+" && z!="-" && z!="*" && z!="/")
-    console.log("Invalid operator!")
-  else if(z == "+")
-    console.log(x + y) 
-  else if(z == "-")
-    console.log(x - y) 
-  else if(z == "*")
-    console.log(x * y) 
-  else if(z == "/")
-    console.log(x / y) 
-</script>  
-
-<script id="ch0104/20" type="hidden">
-  var n = +prompt()
-  var x = +prompt()
-  var y = +prompt()
-  var consume = Math.ceil(y/x)
-  var remain = n - consume
-  console.log(remain)
-</script>  
-
-
+    // console.log(firstMissingPositive(a))
+  </script>
 </head>
+
 <body>
-  
+
 </body>
+
 </html>
