@@ -1,13 +1,13 @@
 var lkwavestian = function() {
 
   function chunk(ary, size) {
-    let len = ary.length
-    let num = Math.ceil(len / size)
-    let result = new Array(num)
-    let k = 0
-    for (let i = 0; i < num; ++i) {
+    var len = ary.length
+    var num = Math.ceil(len / size)
+    var result = new Array(num)
+    var k = 0
+    for (var i = 0; i < num; ++i) {
       result[i] = new Array
-      for (let j = 0; j < size; ++j) {
+      for (var j = 0; j < size; ++j) {
         result[i].push(ary[k++])
         if(k == len)
           return result
@@ -15,7 +15,8 @@ var lkwavestian = function() {
     }
     return result
   }
-  
+
+  function compact()
   return {
     chunk,
   }
