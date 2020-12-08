@@ -85,19 +85,69 @@ var lkwavestian = function () {
   }
 
   function findIndex(ary, predicate, fromIndex = 0) {
-    for (let i = fromIndex; i < ary.length; ++i) {
-      if (predicate(ary[i], i, ary))
-        return i
+    if (predicate instanceof Function) {
+      for (let i = fromIndex; i < ary.length; ++i) {
+        if (predicate(ary[i], i, ary))
+          return i
+      }
+      return -1
+    } else if (predicate instanceof Array) {
+      for (let i = fromIndex; i < ary.length; ++i) {
+        let obj = ary[i]
+        if (obj[predicate[0]] == predicate[1]) {
+          return i
+        }
+      }
+      return -1
+    } else if (typeof predicate === "string") {
+      for (let i = fromIndex; i < ary.length; ++i) {
+        let obj = ary[i]
+        if (obj[predicate] == true) {
+          return i
+        }
+      }
+    } else {
+      for (let i = fromIndex; i < ary.length; ++i) {
+        let obj = ary[i]
+        if (isEqual(obj, predicate)) {
+          return i
+        }
+      }
+      return -1
     }
-    return -1
   }
 
   function findLastIndex(ary, predicate, fromIndex = ary.length - 1) {
-    for (let i = fromIndex; i >= 0; --i) {
-      if (predicate(ary[i], i, ary))
-        return i
+    if (predicate instanceof Function) {
+      for (let i = fromIndex; i >= 0; --i) {
+        if (predicate(ary[i], i, ary))
+          return i
+      }
+      return -1
+    } else if (predicate instanceof Array) {
+      for (let i = fromIndex; i >= 0; --i) {
+        let obj = ary[i]
+        if (obj[predicate[0]] == predicate[1]) {
+          return i
+        }
+      }
+      return -1
+    } else if (typeof predicate === "string") {
+      for (let i = fromIndex; i >= 0; --i) {
+        let obj = ary[i]
+        if (obj[predicate] == true) {
+          return i
+        }
+      }
+    } else {
+      for (let i = fromIndex; i >= 0; --i) {
+        let obj = ary[i]
+        if (isEqual(obj, predicate)) {
+          return i
+        }
+      }
+      return -1
     }
-    return -1
   }
 
   /* function flatten(ary) {
