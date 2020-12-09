@@ -1,5 +1,45 @@
 var lkwavestian = function () {
 
+  function isShallowEqual(a, b) {
+    if (a === b) return true;
+
+    if (a == null || typeof a != "object" ||
+      b == null || typeof b != "object")
+      return false;
+
+    var propsInA = 0,
+      propsInB = 0;
+
+    for (var prop in b)
+      propsInB += 1;
+
+    for (var prop in a) {
+      propsInA += 1;
+      if (!(prop in b) || !isEqual(a[prop], b[prop]))
+        return false;
+    }
+
+    return propsInA <= propsInB;
+  }
+
+  function isEqual(a, b) {
+    if (a === b)
+      return true
+    if (a == null || typeof a != "object" || b == null || typeof b != "object")
+      return false
+    var propsInA = 0,
+      propsInB = 0
+    for (var prop in a) {
+      propsInA += 1
+    }
+    for (var prop in b) {
+      propsInB += 1
+      if (!(prop in a) || !isEqual(a[prop], b[prop]))
+        return false
+    }
+    return propsInA == propsInB
+  }
+
   function baseIteratee(iteratee) {
     if (iteratee === null) {
       return val => val;
@@ -18,7 +58,7 @@ var lkwavestian = function () {
       if (Object.prototype.toString.call(iteratee) === "[object RegExp]")
         return val => iteratee.test(val);
       else
-        return isEqual.bind(null, iteratee);
+        return isShallowEqual.bind(null, iteratee);
     }
   }
 
@@ -119,7 +159,7 @@ var lkwavestian = function () {
   function findLastIndex(ary, predicate, fromIndex = ary.length - 1) {
     var iteratee = baseIteratee(predicate);
     for (let i = fromIndex; i >= 0; --i) {
-      if (iteratee(arr[i])) {
+      if (iteratee(ary[i])) {
         return i;
       }
     }
@@ -316,40 +356,28 @@ var lkwavestian = function () {
     return res
   }
 
-  function differenceBy(ary, values, iteratee) {
+  function differenceBy(ary, ...values) {
     var res = []
     var map = new Map()
-    var iteratee = baseIteratee(iteratee);
-    for (let i = 0; i < values.length; ++i) {
-      map.set(iteratee(values[i]), true)
+    var last = values[values.length - 1]
+    if (typeof last === "function" || typeof last === "string") {
+      var iteratee = baseIteratee(last);
+      for (let i = 0; i < values.length - 1; ++i) {
+        for (let j = 0; j < values[i].length; ++j)
+          map.set(iteratee(values[i][j]), true)
+      }
+    } else {
+      var iteratee = it => it
+      for (let i = 0; i < values.length; ++i) {
+        for (let j = 0; j < values[i].length; ++j)
+          map.set(iteratee(values[i][j]), true)
+      }
     }
     for (let j = 0; j < ary.length; ++j) {
       if (!map.has(iteratee(ary[j])))
         res.push(ary[j])
     }
     return res
-  }
-
-  function isEqual(a, b) {
-    if (a === b) return true;
-
-    if (a == null || typeof a != "object" ||
-      b == null || typeof b != "object")
-      return false;
-
-    var propsInA = 0,
-      propsInB = 0;
-
-    for (var prop in b)
-      propsInB += 1;
-
-    for (var prop in a) {
-      propsInA += 1;
-      if (!(prop in b) || !isEqual(a[prop], b[prop]))
-        return false;
-    }
-
-    return propsInA <= propsInB;
   }
 
   function differenceWith(ary, values, iteratee) {
