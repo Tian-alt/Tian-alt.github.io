@@ -320,15 +320,16 @@ var lkwavestian = function () {
     return sum
   }
 
-  function difference(ary, values) {
+  function difference(ary, ...values) {
     var res = []
     var map = new Map()
     for (let i = 0; i < values.length; ++i) {
-      map.set(values[i], true)
+      for(let j = 0; j < values[i].length; ++j)
+        map.set(values[i][j], true)
     }
-    for (let j = 0; j < ary.length; ++j) {
-      if (!map.has(ary[j]))
-        res.push(ary[j])
+    for (let k = 0; k < ary.length; ++k) {
+      if (!map.has(ary[k]))
+        res.push(ary[k])
     }
     return res
   }
