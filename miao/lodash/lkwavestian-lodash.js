@@ -1,5 +1,27 @@
 var lkwavestian = function () {
 
+  function baseIteratee(iteratee) {
+    if (iteratee === null) {
+      return val => val;
+    }
+    if (typeof iteratee === "string") {
+      return val => val[iteratee];
+    }
+    if (typeof iteratee === "function") {
+      return iteratee;
+    }
+    if (iteratee instanceof Array) {
+      return function (obj) {
+        return obj[iteratee[0]] === iteratee[1];
+      }
+    } else if (typeof iteratee === "object") {
+      if (Object.prototype.toString.call(iteratee) === "[object RegExp]")
+        return val => iteratee.test(val);
+      else
+        return isEqual.bind(null, iteratee);
+    }
+  }
+
   function chunk(ary, size) {
     var len = ary.length
     var num = Math.ceil(len / size)
@@ -84,70 +106,24 @@ var lkwavestian = function () {
     return ary
   }
 
-  function findIndex(ary, predicate, fromIndex = 0) {
-    if (predicate instanceof Function) {
-      for (let i = fromIndex; i < ary.length; ++i) {
-        if (predicate(ary[i], i, ary))
-          return i
+  function findIndex(arr, predicate, fromIdx = 0) {
+    var iteratee = baseIteratee(predicate);
+    for (let i = fromIdx; i < arr.length; i++) {
+      if (iteratee(arr[i])) {
+        return i;
       }
-      return -1
-    } else if (predicate instanceof Array) {
-      for (let i = fromIndex; i < ary.length; ++i) {
-        let obj = ary[i]
-        if (obj[predicate[0]] == predicate[1]) {
-          return i
-        }
-      }
-      return -1
-    } else if (typeof predicate === "string") {
-      for (let i = fromIndex; i < ary.length; ++i) {
-        let obj = ary[i]
-        if (obj[predicate] == true) {
-          return i
-        }
-      }
-    } else {
-      for (let i = fromIndex; i < ary.length; ++i) {
-        let obj = ary[i]
-        if (isEqual(obj, predicate)) {
-          return i
-        }
-      }
-      return -1
     }
+    return -1;
   }
 
   function findLastIndex(ary, predicate, fromIndex = ary.length - 1) {
-    if (predicate instanceof Function) {
-      for (let i = fromIndex; i >= 0; --i) {
-        if (predicate(ary[i], i, ary))
-          return i
+    var iteratee = baseIteratee(predicate);
+    for (let i = fromIndex; i >= 0; --i) {
+      if (iteratee(arr[i])) {
+        return i;
       }
-      return -1
-    } else if (predicate instanceof Array) {
-      for (let i = fromIndex; i >= 0; --i) {
-        let obj = ary[i]
-        if (obj[predicate[0]] == predicate[1]) {
-          return i
-        }
-      }
-      return -1
-    } else if (typeof predicate === "string") {
-      for (let i = fromIndex; i >= 0; --i) {
-        let obj = ary[i]
-        if (obj[predicate] == true) {
-          return i
-        }
-      }
-    } else {
-      for (let i = fromIndex; i >= 0; --i) {
-        let obj = ary[i]
-        if (isEqual(obj, predicate)) {
-          return i
-        }
-      }
-      return -1
     }
+    return -1;
   }
 
   /* function flatten(ary) {
@@ -200,7 +176,7 @@ var lkwavestian = function () {
     for (let i = 0; i < ary.length - 1; ++i) {
       res.push(ary[i])
     }
-    return initial
+    return res
   }
 
   function reverse(ary) {
@@ -232,26 +208,29 @@ var lkwavestian = function () {
   }
 
   function every(ary, predicate) {
+    var iteratee = baseIteratee(predicate)
     for (let i = 0; i < ary.length; ++i) {
-      if (!predicate(ary[i], i, ary))
+      if (!iteratee(ary[i], i, ary))
         return false
     }
     return true
   }
 
   function filter(ary, predicate) {
+    var iteratee = baseIteratee(predicate)
     var res = []
     for (let i = 0; i < ary.length; ++i) {
-      if (predicate(ary[i], i, ary))
+      if (iteratee(ary[i], i, ary))
         res.push(ary[i])
     }
     return res
   }
 
   function find(ary, predicate) {
+    var iteratee = baseIteratee(predicate)
     var res = undefined
     for (let i = 0; i < ary.length; ++i) {
-      if (predicate(ary[i], i, ary)) {
+      if (iteratee(ary[i], i, ary)) {
         res = ary[i]
         break
       }
@@ -278,9 +257,10 @@ var lkwavestian = function () {
   }
 
   function maxBy(ary, iterate) {
+    var iteratee = baseIteratee(iterate)
     var max = 0
     for (let i = 1; i < ary.length; ++i) {
-      if (iterate(ary[max]) < iterate(ary[i]))
+      if (iteratee(ary[max]) < iteratee(ary[i]))
         max = i
     }
     return ary[max]
@@ -296,9 +276,10 @@ var lkwavestian = function () {
   }
 
   function minBy(ary, iterate) {
+    var iteratee = baseIteratee(iterate)
     var min = 0
     for (let i = 1; i < ary.length; ++i) {
-      if (iterate(ary[min]) > iterate(ary[i]))
+      if (iteratee(ary[min]) > iteratee(ary[i]))
         min = i
     }
     return ary[min]
@@ -313,9 +294,10 @@ var lkwavestian = function () {
   }
 
   function sumBy(ary, iterate) {
+    var iteratee = baseIteratee(iterate)
     var sum = 0
     for (let i = 0; i < ary.length; ++i) {
-      sum += iterate(ary[i])
+      sum += iteratee(ary[i])
     }
     return sum
   }
@@ -324,7 +306,7 @@ var lkwavestian = function () {
     var res = []
     var map = new Map()
     for (let i = 0; i < values.length; ++i) {
-      for(let j = 0; j < values[i].length; ++j)
+      for (let j = 0; j < values[i].length; ++j)
         map.set(values[i][j], true)
     }
     for (let k = 0; k < ary.length; ++k) {
@@ -337,6 +319,7 @@ var lkwavestian = function () {
   function differenceBy(ary, values, iteratee) {
     var res = []
     var map = new Map()
+    var iteratee = baseIteratee(iteratee);
     for (let i = 0; i < values.length; ++i) {
       map.set(iteratee(values[i]), true)
     }
@@ -357,19 +340,20 @@ var lkwavestian = function () {
     var propsInA = 0,
       propsInB = 0;
 
-    for (var prop in a)
-      propsInA += 1;
-
-    for (var prop in b) {
+    for (var prop in b)
       propsInB += 1;
-      if (!(prop in a) || !isEqual(a[prop], b[prop]))
+
+    for (var prop in a) {
+      propsInA += 1;
+      if (!(prop in b) || !isEqual(a[prop], b[prop]))
         return false;
     }
 
-    return propsInA == propsInB;
+    return propsInA <= propsInB;
   }
 
-  function differenceWidth(ary, values, iteratee) {
+
+  function differenceWith(ary, values, iteratee) {
     var res = []
     for (let i = 0; i < ary.length; ++i) {
       let flag = false
@@ -386,7 +370,7 @@ var lkwavestian = function () {
   }
 
   return {
-    differenceWidth,
+    differenceWith,
     isEqual,
     differenceWidth,
     differenceBy,
