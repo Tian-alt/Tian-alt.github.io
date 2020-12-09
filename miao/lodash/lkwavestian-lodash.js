@@ -352,7 +352,6 @@ var lkwavestian = function () {
     return propsInA <= propsInB;
   }
 
-
   function differenceWith(ary, values, iteratee) {
     var res = []
     for (let i = 0; i < ary.length; ++i) {
@@ -372,7 +371,6 @@ var lkwavestian = function () {
   return {
     differenceWith,
     isEqual,
-    differenceWidth,
     differenceBy,
     difference,
     sumBy,
