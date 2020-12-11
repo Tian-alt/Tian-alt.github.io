@@ -15,7 +15,7 @@ var lkwavestian = function () {
 
     for (var prop in a) {
       propsInA += 1;
-      if (!(prop in b) || !isEqual(a[prop], b[prop]))
+      if (!(prop in b) || !isShallowEqual(a[prop], b[prop]))
         return false;
     }
 
@@ -396,7 +396,54 @@ var lkwavestian = function () {
     return res
   }
 
+  function dropRightWhile(ary, predicate) {
+    let ary = []
+    let iteratee = baseIteratee(predicate)
+    for (let i = 0; i < ary.length; ++i) {
+      if (!iteratee(ary[i])) {
+        for (let j = 0; j < ary.length; ++j)
+          ary.push(ary[i])
+      }
+    }
+    return ary
+  }
+
+  function dropWhile(ary, predicate) {
+    let res = []
+    let iteratee = baseIteratee(predicate)
+    for (let i = 0; i < ary.length; ++i) {
+      if (!iteratee(ary[i])) {
+        for (let j = i; j < ary.length; ++j)
+          res.push(ary[j])
+        return res
+      }
+    }
+  }
+
+  function flatten(ary) {
+    let res = []
+    for (let i = 0; i < ary.length; ++i) {
+      if (Array.isArray(ary[i]))
+        res.push(...ary[i])
+      else
+        res.push(ary[i])
+    }
+    return res
+  }
+
+  function flattenDepth(ary, depth = 1) {
+    let res = ary
+    while (depth) {
+      res = flatten(res)
+        --depth
+    }
+    return res
+  }
   return {
+    flattenDepth,
+    flatten,
+    dropWhile,
+    dropRightWhile,
     differenceWith,
     isEqual,
     differenceBy,
@@ -429,4 +476,6 @@ var lkwavestian = function () {
     compact,
     chunk,
   }
+
+  flatten([1, [2, [3, [4]], 5]]);
 }()
