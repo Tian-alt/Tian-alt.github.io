@@ -402,7 +402,7 @@ var lkwavestian = function () {
     for (let i = 0; i < ary.length; ++i) {
       if (!iteratee(ary[i])) {
         for (let j = 0; j < ary.length; ++j)
-          ary.push(ary[i])
+          res.push(ary[i])
       }
     }
     return res
