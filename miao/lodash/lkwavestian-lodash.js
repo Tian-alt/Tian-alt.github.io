@@ -397,7 +397,7 @@ var lkwavestian = function () {
   }
 
   function dropRightWhile(ary, predicate) {
-    let ary = []
+    let res = []
     let iteratee = baseIteratee(predicate)
     for (let i = 0; i < ary.length; ++i) {
       if (!iteratee(ary[i])) {
@@ -405,7 +405,7 @@ var lkwavestian = function () {
           ary.push(ary[i])
       }
     }
-    return ary
+    return res
   }
 
   function dropWhile(ary, predicate) {
@@ -476,6 +476,4 @@ var lkwavestian = function () {
     compact,
     chunk,
   }
-
-  flatten([1, [2, [3, [4]], 5]]);
 }()
