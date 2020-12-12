@@ -399,13 +399,13 @@ var lkwavestian = function () {
   function dropRightWhile(ary, predicate) {
     let res = []
     let iteratee = baseIteratee(predicate)
-    for (let i = 0; i < ary.length; ++i) {
+    for (let i = ary.length - 1; i >= 0; --i) {
       if (!iteratee(ary[i])) {
-        for (let j = 0; j < ary.length; ++j)
-          res.push(ary[i])
+        for (let j = i; j >= 0; --j)
+          res.unshift(ary[j])
+        return res
       }
     }
-    return res
   }
 
   function dropWhile(ary, predicate) {
@@ -476,16 +476,14 @@ var lkwavestian = function () {
 
   function intersectionWith(...arg) {
     let res = []
-    let map = new Map()
-    let ary = new Array(...arg)
-    let iteratee = baseIteratee(ary.pop())
+    let par = new Array(...arg)
+    let iteratee = baseIteratee(par.pop())
+    let ary = par.shift()
+    par = flatten(par)
     for (let i = 0; i < ary.length; ++i) {
-      for (let j = 0; j < ary[i].length; ++j) {
-        let item = iteratee(ary[i][j])
-        if (map.has(item))
-          res.push(map.get(item))
-        else
-          map.set(item, ary[i][j])
+      for (let j = 0; j < par.length; ++j) {
+        if (iteratee(ary[i], par[j]))
+          res.push(ary[i])
       }
     }
     return res
@@ -493,9 +491,9 @@ var lkwavestian = function () {
 
   function nth(ary, n = 0) {
     let len = ary.length
-    let pos = (n + len) % len
+    let pos = Math.abs((n + len)) % len
     return ary[pos]
-  }
+  }nth(["a", "b", "c", "d"], 9)
 
   function pull(...arg) {
     let par = new Array(...arg)
