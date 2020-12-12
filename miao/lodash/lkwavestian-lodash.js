@@ -493,7 +493,8 @@ var lkwavestian = function () {
     let len = ary.length
     let pos = Math.abs((n + len)) % len
     return ary[pos]
-  }nth(["a", "b", "c", "d"], 9)
+  }
+  nth(["a", "b", "c", "d"], 9)
 
   function pull(...arg) {
     let par = new Array(...arg)
@@ -591,7 +592,67 @@ var lkwavestian = function () {
     ary.length = k
     return res
   }
+
+  function tail(ary) {
+    let first = ary.shift()
+    return ary
+  }
+
+  function take(ary, n = 1) {
+    let res = []
+    if (n > ary.length)
+      return ary
+    if (n <= 0)
+      return res
+    for (let i = 0; i < ary.length; ++i) {
+      res.push(ary[i])
+        --n
+      if (n <= 0)
+        return res
+    }
+  }
+
+  function takeRight(ary, n = 1) {
+    let res = []
+    if (n > ary.length)
+      return ary
+    if (n <= 0)
+      return res
+    for (let i = ary.length - 1; i >= 0; --i) {
+      res.unshift(ary[i])
+        --n
+      if (n <= 0)
+        return res
+    }
+  }
+
+  function takeRightWhile(ary, predicate) {
+    let res = []
+    let iteratee = baseIteratee(predicate)
+    for (let i = ary.length - 1; i >= 0; --i) {
+      if (iteratee(ary[i]))
+        res.unshift(ary[i])
+      else
+        return res
+    }
+  }
+
+  function takeWhile(ary, predicate) {
+    let res = []
+    let iteratee = baseIteratee(predicate)
+    for (let i = 0; i < ary.length; ++i) {
+      if (iteratee(ary[i]))
+        res.push(ary[i])
+      else
+        return res
+    }
+  }
   return {
+    takeWhile,
+    takeRightWhile,
+    takeRight,
+    take,
+    tail,
     pullAt,
     pullAllWith,
     pullAllBy,
