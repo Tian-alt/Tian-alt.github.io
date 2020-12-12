@@ -439,7 +439,170 @@ var lkwavestian = function () {
     }
     return res
   }
+
+  function intersection(...arg) {
+    let res = []
+    let ary = flatten([...arg])
+    ary.sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
+    for (let i = 0; i < ary.length - 1; ++i) {
+      if (ary[i] == ary[i + 1]) {
+        res.push(ary[i])
+        let j = i
+        while (ary[j] == ary[j + 1] && j < ary.length - 1) {
+          ++j
+        }
+        i = j
+      }
+    }
+    return res
+  }
+
+  function intersectionBy(...arg) {
+    let res = []
+    let map = new Map()
+    let ary = new Array(...arg)
+    let iteratee = baseIteratee(ary.pop())
+    for (let i = 0; i < ary.length; ++i) {
+      for (let j = 0; j < ary[i].length; ++j) {
+        let item = iteratee(ary[i][j])
+        if (map.has(item))
+          res.push(map.get(item))
+        else
+          map.set(item, ary[i][j])
+      }
+    }
+    return res
+  }
+
+  function intersectionWith(...arg) {
+    let res = []
+    let map = new Map()
+    let ary = new Array(...arg)
+    let iteratee = baseIteratee(ary.pop())
+    for (let i = 0; i < ary.length; ++i) {
+      for (let j = 0; j < ary[i].length; ++j) {
+        let item = iteratee(ary[i][j])
+        if (map.has(item))
+          res.push(map.get(item))
+        else
+          map.set(item, ary[i][j])
+      }
+    }
+    return res
+  }
+
+  function nth(ary, n = 0) {
+    let len = ary.length
+    let pos = (n + len) % len
+    return ary[pos]
+  }
+
+  function pull(...arg) {
+    let par = new Array(...arg)
+    let ary = par.shift()
+    let k = 0
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < par.length; ++j) {
+        if (ary[i] == par[j]) {
+          flag = true
+          break
+        }
+      }
+      if (!flag)
+        ary[k++] = ary[i]
+    }
+    ary.length = k
+    return ary
+  }
+
+  function pullAll(...arg) {
+    let par = new Array(...arg)
+    let ary = par.shift()
+    par = flatten(par)
+    let k = 0
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < par.length; ++j) {
+        if (ary[i] == par[j]) {
+          flag = true
+          break
+        }
+      }
+      if (!flag)
+        ary[k++] = ary[i]
+    }
+    ary.length = k
+    return ary
+  }
+
+  function pullAllBy(...arg) {
+    let par = new Array(...arg)
+    let ary = par.shift()
+    let iteratee = baseIteratee(par.pop())
+    par = flatten(par)
+    let k = 0
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < par.length; ++j) {
+        if (iteratee(par[j]) == iteratee(ary[i])) {
+          flag = true
+          break
+        }
+      }
+      if (!flag)
+        ary[k++] = ary[i]
+    }
+    ary.length = k
+    return ary
+  }
+
+  function pullAllWith(...arg) {
+    let par = new Array(...arg)
+    let ary = par.shift()
+    let iteratee = baseIteratee(par.pop())
+    par = flatten(par)
+    let k = 0
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < par.length; ++j) {
+        if (iteratee(ary[i], par[j])) {
+          flag = true
+          break
+        }
+      }
+      if (!flag)
+        ary[k++] = ary[i]
+    }
+    ary.length = k
+    return ary
+  }
+
+  function pullAt(ary, idx) {
+    let res = []
+    let map = new Map()
+    for (let i = 0; i < idx.length; ++i) {
+      map.set(idx[i], true)
+      res.push(ary[idx[i]])
+    }
+    let k = 0
+    for (let j = 0; j < ary.length; ++j) {
+      if (!map.has(j))
+        ary[k++] = ary[j]
+    }
+    ary.length = k
+    return res
+  }
   return {
+    pullAt,
+    pullAllWith,
+    pullAllBy,
+    pullAll,
+    pull,
+    nth,
+    intersectionWith,
+    intersectionBy,
+    intersection,
     flattenDepth,
     flatten,
     dropWhile,
