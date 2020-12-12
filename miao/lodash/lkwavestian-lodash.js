@@ -491,10 +491,11 @@ var lkwavestian = function () {
 
   function nth(ary, n = 0) {
     let len = ary.length
-    let pos = Math.abs((n + len)) % len
+    if(Math.abs(n) > len)
+      return undefined
+    let pos = (n + len) % len
     return ary[pos]
   }
-  nth(["a", "b", "c", "d"], 9)
 
   function pull(...arg) {
     let par = new Array(...arg)
