@@ -909,22 +909,27 @@ var lkwavestian = function () {
   }
 
   function xorWith(...arg) {
-    let res = []
     let ary = new Array(...arg)
     let iteratee = baseIteratee(ary.pop())
     ary = flatten(ary)
     let map = new Map()
     for (let i = 0; i < ary.length; ++i) {
-      let flag = false
-      for (let j = 0; j < ary.length; ++j) {
-        if (i != j && iteratee(ary[i], ary[j]))
-          flag = true
+      for (let j = i + 1; j < ary.length; ++j) {
+        if (iteratee(ary[i], ary[j])) {
+          map.set(i, true)
+          map.set(j, true)
+        }
       }
-      if (!flag)
-        res.push(ary[i])
+    }
+    let res = []
+    for (let j = 0; j < ary.length; ++j) {
+      if (!map.has(j))
+        res.push(ary[j])
     }
     return res
   }
+
+  
   return {
     xorWith,
     xorBy,
