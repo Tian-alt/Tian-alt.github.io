@@ -887,9 +887,13 @@ var lkwavestian = function () {
       if (!map.has(ary[i]))
         map.set(ary[i], true)
       else
-        map.delete(ary[i])
+        map.set(ary[i], false)
     }
-    let res = Array.from(map.keys())
+    let res = []
+    map.forEach((val, key, map) => {
+      if (val)
+        res.push(key)
+    })
     return res
   }
 
@@ -929,7 +933,7 @@ var lkwavestian = function () {
     return res
   }
 
-  
+
   return {
     xorWith,
     xorBy,
