@@ -756,7 +756,189 @@ var lkwavestian = function () {
     }
     return res
   }
+
+  function union(...arg) {
+    let map = new Map()
+    let ary = flatten([...arg])
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(ary[i]))
+        map.set(ary[i], ary[i])
+    }
+
+    let res = Array.from(map.keys())
+    return res
+  }
+
+  function unionBy(...arg) {
+    let ary = flatten([...arg])
+    let iteratee = baseIteratee(ary.pop())
+    let map = new Map()
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(iteratee(ary[i])))
+        map.set(iteratee(ary[i]), ary[i])
+    }
+    let res = Array.from(map.values())
+    return res
+  }
+
+  function unionWith(...arg) {
+    let ary = flatten([...arg])
+    let iteratee = baseIteratee(ary.pop())
+    let res = [ary[0]]
+    for (let i = 1; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < res.length; ++j) {
+        if (iteratee(ary[i], res[j]))
+          flag = true
+      }
+      if (!flag)
+        res.push(ary[i])
+    }
+    return res
+  }
+
+  function uniq(ary) {
+    let res = []
+    let map = new Map()
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(ary[i])) {
+        map.set(ary[i], true)
+        res.push(ary[i])
+      }
+    }
+    return res
+  }
+
+  function uniqBy(ary, predicate) {
+    let res = []
+    let map = new Map()
+    let iteratee = baseIteratee(predicate)
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(iteratee(ary[i]))) {
+        map.set(iteratee(ary[i]), true)
+        res.push(ary[i])
+      }
+    }
+    return res
+  }
+
+  function uniqWith(ary, predicate) {
+    let iteratee = baseIteratee(predicate)
+    let res = [ary[0]]
+    for (let i = 1; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < res.length; ++j) {
+        if (iteratee(ary[i], res[j]))
+          flag = true
+      }
+      if (!flag)
+        res.push(ary[i])
+    }
+    return res
+  }
+
+  function unzip(ary) {
+    let len = ary.length
+    let res = new Array(ary[0].length)
+    for (let k = 0; k < res.length; ++k) {
+      res[k] = new Array(len)
+    }
+    for (let i = 0; i < len; ++i) {
+      for (let j = 0; j < ary[i].length; ++j) {
+        res[j][i] = ary[i][j]
+      }
+    }
+    return res
+  }
+
+  function unzipWith(ary, predicate) {
+    let res = []
+    let iteratee = baseIteratee(predicate)
+    for (let i = 0; i < ary[0].length; ++i) {
+      res.push(iteratee(ary[0][i], ary[1][i]))
+    }
+    return res
+  }
+
+  function add(a, b) {
+    return a + b
+  }
+
+  function without(ary, ...arg) {
+    let res = []
+    let rmAry = new Array(...arg)
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < rmAry.length; ++j) {
+        if (isEqual(ary[i], rmAry[j]))
+          flag = true
+      }
+      if (!flag)
+        res.push(ary[i])
+    }
+    return res
+  }
+
+  function xor(...arg) {
+    let ary = new Array(...arg)
+    ary = flatten(ary)
+    let map = new Map()
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(ary[i]))
+        map.set(ary[i], true)
+      else
+        map.delete(ary[i])
+    }
+    let res = Array.from(map.keys())
+    return res
+  }
+
+  function xorBy(...arg) {
+    let ary = new Array(...arg)
+    let iteratee = baseIteratee(ary.pop())
+    ary = flatten(ary)
+    let map = new Map()
+    for (let i = 0; i < ary.length; ++i) {
+      if (!map.has(iteratee(ary[i])))
+        map.set(iteratee(ary[i]), ary[i])
+      else
+        map.delete(iteratee(ary[i]))
+    }
+    let res = Array.from(map.values())
+    return res
+  }
+
+  function xorWith(...arg) {
+    let res = []
+    let ary = new Array(...arg)
+    let iteratee = baseIteratee(ary.pop())
+    ary = flatten(ary)
+    let map = new Map()
+    for (let i = 0; i < ary.length; ++i) {
+      let flag = false
+      for (let j = 0; j < ary.length; ++j) {
+        if (i != j && iteratee(ary[i], ary[j]))
+          flag = true
+      }
+      if (!flag)
+        res.push(ary[i])
+    }
+    return res
+  }
   return {
+    xorWith,
+    xorBy,
+    xor,
+    without,
+    add,
+    unzipWith,
+    unzip,
+    uniqWith,
+    uniqBy,
+    uniq,
+    unionWith,
+    unionBy,
+    union,
     sortedUniqBy,
     sortedUniq,
     sortedLastIndexOf,
