@@ -491,7 +491,7 @@ var lkwavestian = function () {
 
   function nth(ary, n = 0) {
     let len = ary.length
-    if(Math.abs(n) > len)
+    if (Math.abs(n) > len)
       return undefined
     let pos = (n + len) % len
     return ary[pos]
@@ -648,7 +648,122 @@ var lkwavestian = function () {
         return res
     }
   }
+
+  function sortedIndexBy(ary, val, predicate) {
+    let iteratee = baseIteratee(predicate)
+    var left = 0
+    var right = ary.length - 1
+    while (left <= right) {
+      var mid = (left + right) >> 1
+      if (iteratee(val) <= iteratee(ary[mid])) {
+        right = mid - 1
+      } else
+        left = mid + 1
+    }
+    return mid
+  }
+
+  function sortedIndexOf(ary, val) {
+    var left = 0
+    var right = ary.length - 1
+    while (left <= right) {
+      var mid = (left + right) >> 1
+      if (val > ary[mid]) {
+        left = mid + 1
+      } else
+        right = mid - 1
+    }
+    if (ary[right + 1] == val)
+      return right + 1
+    else
+      return -1
+  }
+
+  function sortedLastIndex(ary, val) {
+    var left = 0
+    var right = ary.length - 1
+    while (left <= right) {
+      var mid = (left + right) >> 1
+      if (val < ary[mid]) {
+        right = mid - 1
+      } else
+        left = mid + 1
+    }
+    if (ary[left - 1] == val)
+      return left
+    else
+      return -1
+  }
+
+  function sortedLastIndexBy(ary, val, predicate) {
+    let iteratee = baseIteratee(predicate)
+    var left = 0
+    var right = ary.length - 1
+    while (left <= right) {
+      var mid = (left + right) >> 1
+      if (iteratee(val) < iteratee(ary[mid])) {
+        right = mid - 1
+      } else
+        left = mid + 1
+    }
+    if (iteratee(ary[left - 1]) == iteratee(val))
+      return left
+    else
+      return -1
+  }
+
+  function sortedLastIndexOf(ary, val) {
+    var left = 0
+    var right = ary.length - 1
+    while (left <= right) {
+      var mid = (left + right) >> 1
+      if (val < ary[mid]) {
+        right = mid - 1
+      } else
+        left = mid + 1
+    }
+    if (ary[right] == val)
+      return right
+    else
+      return -1
+  }
+
+  function sortedUniq(ary) {
+    let res = []
+    for (let i = 0; i < ary.length; ++i) {
+      res.push(ary[i])
+      let j = i + 1
+      for (j; j < ary.length; ++j) {
+        if (ary[j] != ary[i])
+          break
+      }
+      i = j - 1
+    }
+    return res
+  }
+
+  function sortedUniqBy(ary, predicate) {
+    let iteratee = baseIteratee(predicate)
+    let res = []
+    for (let i = 0; i < ary.length; ++i) {
+      res.push(ary[i])
+      let j = i + 1
+      for (j; j < ary.length; ++j) {
+        if (iteratee(ary[j]) != iteratee(ary[i]))
+          break
+      }
+      i = j - 1
+    }
+    return res
+  }
   return {
+    sortedUniqBy,
+    sortedUniq,
+    sortedLastIndexOf,
+    sortedLastIndexBy,
+    sortedLastIndex,
+    sortedIndexOf,
+    sortedIndexBy,
     takeWhile,
     takeRightWhile,
     takeRight,
