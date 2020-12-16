@@ -178,7 +178,7 @@ var lkwavestian = function () {
   } */
 
   function flattenDeep(ary) {
-    var res = new Array
+    var res = new Array()
     var recursion = ary => {
       for (let i = 0; i < ary.length; ++i) {
         if (!(ary[i] instanceof Array))
@@ -933,8 +933,63 @@ var lkwavestian = function () {
     return res
   }
 
+  function zip(...ary) {
+    let len = ary.length
+    let res = new Array(ary[0].length)
+    for (let k = 0; k < res.length; ++k) {
+      res[k] = new Array(len)
+    }
+    for (let i = 0; i < len; ++i) {
+      for (let j = 0; j < ary[i].length; ++j) {
+        res[j][i] = ary[i][j]
+      }
+    }
+    return res
+  }
 
+  function zipObject(props, values) {
+    let res = {}
+    for (let i = 0; i < props.length; ++i) {
+      res[props[i]] = values[i]
+    }
+    return res
+  }
+
+  function zipWith(...arg) {
+    let iteratee = baseIteratee(arg.pop())
+    let res = new Array(arg[0].length)
+    for (let i = 0; i < res.length; ++i) {
+      res[i] = iteratee(arg[0][i], arg[1][i], arg[2][i])
+    }
+    return res
+  }
+
+  function strMapToObj(strMap) {
+    let obj = Object.create(null);
+    for (let [k, v] of strMap) {
+      obj[k] = v;
+    }
+    return obj;
+  }
+
+  function countBy(coll, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let map = new Map()
+    for (let i = 0; i < coll.length; ++i) {
+      let key = iteratee(coll[i])
+      if (map.has(key)) {
+        let val = map.get(key)
+        map.set(key, ++val)
+      } else
+        map.set(key, 1)
+    }
+    return strMapToObj(map)
+  }
   return {
+    countBy,
+    zipWith,
+    zipObject,
+    zip,
     xorWith,
     xorBy,
     xor,
