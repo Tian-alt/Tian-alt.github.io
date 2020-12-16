@@ -421,14 +421,7 @@ var lkwavestian = function () {
   }
 
   function flatten(ary) {
-    let res = []
-    for (let i = 0; i < ary.length; ++i) {
-      if (Array.isArray(ary[i]))
-        res.push(...ary[i])
-      else
-        res.push(ary[i])
-    }
-    return res
+    return [].concat(...ary)
   }
 
   function flattenDepth(ary, depth = 1) {
@@ -985,7 +978,26 @@ var lkwavestian = function () {
     }
     return strMapToObj(map)
   }
+
+  function mapValues(obj, iteratee) {
+    let res = {}
+    let iteratee = baseIteratee(iteratee)
+    for (let key in obj) {
+      res[key] = iteratee(obj[key])
+    }
+    return res
+  }
+
+  function findLast(col, predicate, fromIndex = col.length - 1) {
+    var iteratee = baseIteratee(predicate)
+    for (let i = fromIndex; i >= 0; --i) {
+      if (iteratee(col[i]))
+        return col[i]
+    }
+  }
   return {
+    findLast,
+    mapValues,
     countBy,
     zipWith,
     zipObject,
