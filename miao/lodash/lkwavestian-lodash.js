@@ -995,7 +995,37 @@ var lkwavestian = function () {
         return col[i]
     }
   }
+
+  function flatMap(col, predicate) {
+    let res = []
+    var iteratee = baseIteratee(predicate)
+    Object.keys(col).forEach(i => {
+      res = res.concat(iteratee(col[i]))
+    });
+    return res
+  }
+
+  function flatMapDeep(col, predicate) {
+    let res = []
+    var iteratee = baseIteratee(predicate)
+    Object.keys(col).forEach(i => {
+      res = res.concat(flattenDeep(iteratee(col[i])))
+    });
+    return res
+  }
+
+  function flatMapDepth(col, predicate, depth) {
+    let res = []
+    var iteratee = baseIteratee(predicate)
+    Object.keys(col).forEach(i => {
+      res = res.concat(flattenDepth(iteratee(col[i]), depth - 1))
+    });
+    return res
+  }
   return {
+    flatMapDepth,
+    flatMapDeep,
+    flatMap,
     findLast,
     mapValues,
     countBy,
