@@ -981,7 +981,7 @@ var lkwavestian = function () {
 
   function mapValues(obj, iteratee) {
     let res = {}
-    let iteratee = baseIteratee(iteratee)
+    var iteratee = baseIteratee(iteratee)
     for (let key in obj) {
       res[key] = iteratee(obj[key])
     }
