@@ -1022,7 +1022,41 @@ var lkwavestian = function () {
     });
     return res
   }
+
+  function forEach(col, iteratee) {
+    let keys = Object.keys(col)
+    for (let i = 0; i < keys.length; ++i) {
+      if (iteratee(col[keys[i]], keys[i], col))
+        iteratee(col[keys[i]], keys[i], col)
+    }
+    return col
+  }
+
+  function forEachRight(col, iteratee) {
+    let keys = Object.keys(col)
+    for (let i = keys.length - 1; i >= 0; --i) {
+      if (iteratee(col[keys[i]], keys[i], col))
+        iteratee(col[keys[i]], keys[i], col)
+    }
+    return col
+  }
+
+  function groupBy(col, predicate) {
+    let iteratee = baseIteratee(predicate)
+    let res = {}
+    for (let i of Object.keys(col)) {
+      let key = iteratee(col[i])
+      if (res[key])
+        res[key].push(col[i])
+      else
+        res[key] = [col[i]]
+    }
+    return res
+  }
   return {
+    groupBy,
+    forEachRight,
+    forEach,
     flatMapDepth,
     flatMapDeep,
     flatMap,
