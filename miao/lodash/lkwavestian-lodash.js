@@ -41,7 +41,7 @@ var lkwavestian = function () {
   }
 
   function baseIteratee(iteratee) {
-    if (iteratee === null) {
+    /* if (iteratee === null) {
       return val => val;
     }
     if (typeof iteratee === "string") {
@@ -59,7 +59,18 @@ var lkwavestian = function () {
         return val => iteratee.test(val);
       else
         return isShallowEqual.bind(null, iteratee);
+    } */
+
+    if (typeof iteratee === "string") {
+      return property(iteratee)
     }
+    if (iteratee instanceof Array) {
+      return matchesProperty(iteratee[0], iteratee[1])
+    }
+    if (typeof iteratee === "object") {
+      return matches(iteratee)
+    }
+    return iteratee
   }
 
   function chunk(ary, size) {
@@ -1053,7 +1064,86 @@ var lkwavestian = function () {
     }
     return res
   }
+
+  function isMatch(object, source) {
+    if (object === source) return true
+
+    if (object == null || typeof object != "object" ||
+      source == null || typeof source != "object")
+      return false;
+
+    var propsInA = 0,
+      propsInB = 0;
+
+    for (var prop in object)
+      propsInA += 1;
+
+    for (var prop in source) {
+      propsInB += 1;
+      if (!(prop in object) || !isMatch(object[prop], source[prop]))
+        return false;
+    }
+
+    return propsInB <= propsInA;
+  }
+
+  function toPath(str) {
+    return str.split(/\.|\[|\]\./g)
+  }
+
+  function get(obj, path, defaultVal) {
+    if (typeof path == 'string') {
+      path = toPath(path);
+    }
+    for (let i = 0; i < path.length; i++) {
+      if (obj == undefined) {
+        return defaultVal;
+      }
+      obj = obj[path[i]];
+    }
+    if (obj == undefined) {
+      return defaultVal;
+    }
+    return obj;
+  }
+
+  function property(path) {
+    return bind(get, null, window, path)
+  }
+
+
+  function matches(src) {
+    return bind(isMatch, null, window, src)
+  }
+
+  function bind(func, thisArg, ...partials) {
+    return function (...args) {
+      // var copy = partials.slice()
+      /* copy.forEach(item => {
+        if(item === window)
+          item = args.shift() ???? forEach对window判别不了想等情况？？
+      }) */
+      for (var i = 0; i < partials.length; ++i) {
+        if (partials[i] === window)
+          partials[i] = args.shift()
+      }
+      return func.call(thisArg, ...partials, ...args)
+    }
+  }
+
+  function matchesProperty(path, srcValue) {
+    return function (obj) {
+      return isEqual(get(obj, path), srcValue);
+    }
+  }
   return {
+    matchesProperty,
+    bind,
+    matches,
+    property,
+    get,
+    toPath,
+    isMatch,
     groupBy,
     forEachRight,
     forEach,
