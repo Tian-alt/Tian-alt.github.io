@@ -1118,16 +1118,16 @@ var lkwavestian = function () {
 
   function bind(func, thisArg, ...partials) {
     return function (...args) {
-      // var copy = partials.slice()
+      var copy = partials.slice()
       /* copy.forEach(item => {
         if(item === window)
           item = args.shift() ???? forEach对window判别不了想等情况？？
       }) */
-      for (var i = 0; i < partials.length; ++i) {
-        if (partials[i] === window)
-          partials[i] = args.shift()
+      for (var i = 0; i < copy.length; ++i) {
+        if (copy[i] === window)
+          copy[i] = args.shift()
       }
-      return func.call(thisArg, ...partials, ...args)
+      return func.call(thisArg, ...copy, ...args)
     }
   }
 
