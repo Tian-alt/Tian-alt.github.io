@@ -1198,131 +1198,131 @@ var lkwavestian = function () {
     for (let i in col) {
       ary.push(Object.values(col[i])) //数组集
     }
-
-    function baseSort(arr, idx) {
-      let map = new Map()
-      let valToSort = new Array(arr.length)
-      arr.forEach(item => {
-        let val = item[idx]
-        map.set(val, item)
-        arrToSort.push(val)
-      });
-      let valHadSort = valToSort.sort()
-      let res = []
-      valHadSort.forEach(val => {
-        res.push(map.get(val))
-      });
-      return res
-    }
-
-    function partition(col, predicate) {
-      let res = new Array(2)
-      res[0] = []
-      res[1] = []
-      let iteratee = baseIteratee(predicate)
-      for (var item of Object.values(col)) {
-        if(iteratee(item))
-          res[0].push(item)
-        else
-          res[1].push(item)
-      }
-      return res
-    }
-
   }
-  return {
-    partition,
-    map,
-    keyBy,
-    identity,
-    includes,
-    matchesProperty,
-    bind,
-    matches,
-    property,
-    get,
-    toPath,
-    isMatch,
-    groupBy,
-    forEachRight,
-    forEach,
-    flatMapDepth,
-    flatMapDeep,
-    flatMap,
-    findLast,
-    mapValues,
-    countBy,
-    zipWith,
-    zipObject,
-    zip,
-    xorWith,
-    xorBy,
-    xor,
-    without,
-    add,
-    unzipWith,
-    unzip,
-    uniqWith,
-    uniqBy,
-    uniq,
-    unionWith,
-    unionBy,
-    union,
-    sortedUniqBy,
-    sortedUniq,
-    sortedLastIndexOf,
-    sortedLastIndexBy,
-    sortedLastIndex,
-    sortedIndexOf,
-    sortedIndexBy,
-    takeWhile,
-    takeRightWhile,
-    takeRight,
-    take,
-    tail,
-    pullAt,
-    pullAllWith,
-    pullAllBy,
-    pullAll,
-    pull,
-    nth,
-    intersectionWith,
-    intersectionBy,
-    intersection,
-    flattenDepth,
-    flatten,
-    dropWhile,
-    dropRightWhile,
-    differenceWith,
-    isEqual,
-    differenceBy,
-    difference,
-    sumBy,
-    sum,
-    minBy,
-    min,
-    maxBy,
-    max,
-    toArray,
-    find,
-    filter,
-    every,
-    sortedIndex,
-    reverse,
-    initial,
-    indexOf,
-    head,
-    fromPairs,
-    flattenDeep,
-    findLastIndex,
-    findIndex,
-    fill,
-    lastIndexOf,
-    last,
-    join,
-    dropRight,
-    drop,
-    compact,
-    chunk,
+
+  function baseSort(arr, idx) {
+    let map = new Map()
+    let valToSort = new Array(arr.length)
+    arr.forEach(item => {
+      let val = item[idx]
+      map.set(val, item)
+      arrToSort.push(val)
+    });
+    let valHadSort = valToSort.sort()
+    let res = []
+    valHadSort.forEach(val => {
+      res.push(map.get(val))
+    });
+    return res
   }
+
+  function partition(col, predicate) {
+    let res = new Array(2)
+    res[0] = []
+    res[1] = []
+    let iteratee = baseIteratee(predicate)
+    for (var item of Object.values(col)) {
+      if (iteratee(item))
+        res[0].push(item)
+      else
+        res[1].push(item)
+    }
+    return res
+  }
+
+return {
+  partition,
+  map,
+  keyBy,
+  identity,
+  includes,
+  matchesProperty,
+  bind,
+  matches,
+  property,
+  get,
+  toPath,
+  isMatch,
+  groupBy,
+  forEachRight,
+  forEach,
+  flatMapDepth,
+  flatMapDeep,
+  flatMap,
+  findLast,
+  mapValues,
+  countBy,
+  zipWith,
+  zipObject,
+  zip,
+  xorWith,
+  xorBy,
+  xor,
+  without,
+  add,
+  unzipWith,
+  unzip,
+  uniqWith,
+  uniqBy,
+  uniq,
+  unionWith,
+  unionBy,
+  union,
+  sortedUniqBy,
+  sortedUniq,
+  sortedLastIndexOf,
+  sortedLastIndexBy,
+  sortedLastIndex,
+  sortedIndexOf,
+  sortedIndexBy,
+  takeWhile,
+  takeRightWhile,
+  takeRight,
+  take,
+  tail,
+  pullAt,
+  pullAllWith,
+  pullAllBy,
+  pullAll,
+  pull,
+  nth,
+  intersectionWith,
+  intersectionBy,
+  intersection,
+  flattenDepth,
+  flatten,
+  dropWhile,
+  dropRightWhile,
+  differenceWith,
+  isEqual,
+  differenceBy,
+  difference,
+  sumBy,
+  sum,
+  minBy,
+  min,
+  maxBy,
+  max,
+  toArray,
+  find,
+  filter,
+  every,
+  sortedIndex,
+  reverse,
+  initial,
+  indexOf,
+  head,
+  fromPairs,
+  flattenDeep,
+  findLastIndex,
+  findIndex,
+  fill,
+  lastIndexOf,
+  last,
+  join,
+  dropRight,
+  drop,
+  compact,
+  chunk,
+}
 }()
