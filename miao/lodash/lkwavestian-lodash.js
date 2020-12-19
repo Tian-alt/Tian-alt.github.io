@@ -1087,8 +1087,8 @@ var lkwavestian = function () {
     return propsInB <= propsInA;
   }
 
-  function toPath(str) {
-    return str.split(/\.|\[|\]\./g)
+  function toPath(val) {
+    return val.split(/\.|\[|\]\.|\]\[/g);
   }
 
   function get(obj, path, defaultVal) {
@@ -1121,7 +1121,7 @@ var lkwavestian = function () {
       var copy = partials.slice()
       /* copy.forEach(item => {
         if(item === window)
-          item = args.shift() ???? forEach对window判别不了想等情况？？
+          item = args.shift() ???? forEach对window判别不了相等情况？？
       }) */
       for (var i = 0; i < copy.length; ++i) {
         if (copy[i] === window)
@@ -1130,13 +1130,112 @@ var lkwavestian = function () {
       return func.call(thisArg, ...copy, ...args)
     }
   }
+  //  function f(a,b,c,d) {return a + b + c + d}
+  //  f1 = bind(f, null, window, b = 2, window, d = 3)
+  //  f1(a,c)
 
   function matchesProperty(path, srcValue) {
     return function (obj) {
       return isEqual(get(obj, path), srcValue);
     }
   }
+
+  function includes(col, val, fromIndex = 0) {
+    if (typeof (col) === "string") {
+      return col.includes(val, fromIndex);
+    }
+    for (var item of Object.values(col)) {
+      var idx = 0;
+      if (idx >= fromIndex) {
+        if (item === value) {
+          return true;
+        }
+      }
+      idx++;
+    }
+    return false;
+  }
+
+  function invokeMap(collection, path, ...args) {
+    let vals = Object.values(collection);
+    return vals.map(obj => {
+      if (!isFunction(path)) {
+        path = get(obj, path);
+      }
+      return path.call(obj, ...args)
+    })
+  }
+
+  function identity(val) {
+    return val
+  }
+
+  function keyBy(col, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let res = {}
+    let ary = Object.values(col)
+    for (let i = 0; i < ary.length; ++i) {
+      let key = iteratee(ary[i])
+      res[key] = ary[i]
+    }
+    return res
+  }
+
+  function map(col, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let res = []
+    let ary = Object.values(col)
+    for (let i = 0; i < ary.length; ++i) {
+      let val = iteratee(ary[i])
+      res.push(val)
+    }
+    return res
+  }
+
+  function sortBy(col, ...args) {
+    let iterates = args.map(it => baseIteratee(it)) //比较函数映射
+    let ary = []
+    for (let i in col) {
+      ary.push(Object.values(col[i])) //数组集
+    }
+
+    function baseSort(arr, idx) {
+      let map = new Map()
+      let valToSort = new Array(arr.length)
+      arr.forEach(item => {
+        let val = item[idx]
+        map.set(val, item)
+        arrToSort.push(val)
+      });
+      let valHadSort = valToSort.sort()
+      let res = []
+      valHadSort.forEach(val => {
+        res.push(map.get(val))
+      });
+      return res
+    }
+
+    function partition(col, predicate) {
+      let res = new Array(2)
+      res[0] = []
+      res[1] = []
+      let iteratee = baseIteratee(predicate)
+      for (var item of Object.values(col)) {
+        if(iteratee(item))
+          res[0].push(item)
+        else
+          res[1].push(item)
+      }
+      return res
+    }
+
+  }
   return {
+    partition,
+    map,
+    keyBy,
+    identity,
+    includes,
     matchesProperty,
     bind,
     matches,
