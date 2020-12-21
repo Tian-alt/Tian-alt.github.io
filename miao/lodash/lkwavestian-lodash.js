@@ -1258,7 +1258,101 @@ var lkwavestian = function () {
     return acc
   }
 
+  function reject(col, predicate) {
+    let res = []
+    let iteratee = baseIteratee(predicate)
+
+    for (var item of col) {
+      if (!iteratee(item))
+        res.push(item)
+    }
+    return res
+  }
+
+  function sample(col) {
+    let keys = Object.keys(col)
+    return col[keys[random(0, keys.length)]]
+  }
+
+
+  function random(lower = 0, upper = 1, floating) {
+    let isFloating = false
+
+    if (arguments.length == 1) {
+      upper = lower
+      lower = 0
+      if (!isInteger(arguments[0])) {
+        isFloating = true
+      }
+    }
+
+    if (arguments.length == 2) {
+      if (typeof arguments[1] == 'boolean') {
+        upper = lower
+        lower = 0
+        isFloating = floating
+      }
+      if (!isInteger(arguments[0]) || !isInteger(arguments[1])) {
+        isFloating = true
+      }
+    }
+
+    if (isFloating)
+      return Math.random() * (upper - lower) + lower
+    else {
+      lower = Math.ceil(lower)
+      upper = Math.ceil(upper)
+      return Math.floor(Math.random() * (upper - lower) + lower)
+    }
+  }
+
+  function isInteger(val) {
+    return Number.isInteger(val)
+  }
+
+  function sampleSize(col, n = 1) {
+    let res = []
+    let keys = Object.keys(col)
+    for (let i = 0; i < n; ++i) {
+      res.push(col[[keys[random(0, keys.length)]]])
+    }
+    return res
+  }
+
+  function shuffle(col) {
+    let keys = Object.keys(col)
+    // 本质其实是选择排序，从后往前
+    for (var i = keys.length - 1; i >= 0; i--) { //从后往前扫描
+      var randomIndex = Math.floor(Math.random() * (i + 1)); //从0 到 i (都包括) 随机选择一个数字
+      var itemAtIndex = col[keys[randomIndex]]; //交换下标为 i 与下标为随机位置的元素
+      col[keys[randomIndex]] = col[keys[i]];
+      col[keys[i]] = itemAtIndex;
+    }
+    return col;
+  }
+
+  function size(col) {
+    return Object.keys(col).length
+  }
+
+  function some(col, predicate) {
+    let iteratee = baseIteratee(predicate)
+    for (var item of col) {
+      if (iteratee(item))
+        return true
+    }
+    return false
+  }
+
   return {
+    some,
+    size,
+    shuffle,
+    sampleSize,
+    isInteger,
+    sample,
+    random,
+    reject,
     reduceRight,
     reduce,
     partition,
