@@ -1344,7 +1344,84 @@ var lkwavestian = function () {
     return false
   }
 
+  function defer(f, ...args) {
+    return setTimeout(f(...args), 0)
+  }
+
+  function delay(f, wait, ...args) {
+    return setTimeout(f(...args), wait)
+  }
+
+  function castArray(value) {
+    return [value]
+  }
+
+  function conformsTo(object, source) {
+    for (let key in object) {
+      if (source.hasOwnProperty(key)) {
+        let iteratee = baseIteratee(source[key])
+        if (!iteratee(object[key]))
+          return false
+      }
+    }
+    return true
+  }
+
+  function eq(value, other) {
+    return value === other || Number.isNaN(value) && Number.isNaN(other)
+  }
+
+  function gt(value, other) {
+    return value > other
+  }
+
+  function gte(value, other) {
+    return value >= other
+  }
+
+  function isArguments(values) {
+    let type = Object.prototype.toString.call(values)
+    return isEqual(type, "[object Arguments]")
+  }
+
+  function isArray(values) {
+    return Array.isArray(values)
+  }
+
+  function isArrayBuffer(values) {
+    let type = Object.prototype.toString.call(values)
+    return isEqual(type, "[object ArrayBuffer]")
+  }
+
+  function isArrayLike(value) {
+    if (typeof value == 'function') {
+      return false
+    }
+    return value.length >= 0 && value.length <= Number.MAX_SAFE_INTEGER
+  }
+
+  function isArrayLikeObject(value) {
+    if (typeof value == 'function') {
+      return false
+    }
+    if (typeof value == 'object')
+      return false
+    return value.length >= 0 && value.length <= Number.MAX_SAFE_INTEGER
+  }
+
   return {
+    isArrayLikeObject,
+    isArrayLike,
+    isArrayBuffer,
+    isArray,
+    isArguments,
+    gte,
+    gt,
+    eq,
+    conformsTo,
+    castArray,
+    delay,
+    defer,
     some,
     size,
     shuffle,
