@@ -1116,7 +1116,7 @@ var lkwavestian = function () {
     return bind(isMatch, null, window, src)
   }
 
-  function bind(func, thisArg, ...partials) {
+  function bind(f, thisArg, ...partials) {
     return function (...args) {
       var copy = partials.slice()
       /* copy.forEach(item => {
@@ -1127,7 +1127,7 @@ var lkwavestian = function () {
         if (copy[i] === window)
           copy[i] = args.shift()
       }
-      return func.call(thisArg, ...copy, ...args)
+      return f.call(thisArg, ...copy, ...args)
     }
   }
   //  function f(a,b,c,d) {return a + b + c + d}
@@ -1141,17 +1141,21 @@ var lkwavestian = function () {
   }
 
   function includes(col, val, fromIndex = 0) {
-    if (typeof (col) === "string") {
+    if (typeof col === "string") {
       return col.includes(val, fromIndex);
-    }
-    for (var item of Object.values(col)) {
-      var idx = 0;
-      if (idx >= fromIndex) {
-        if (item === value) {
-          return true;
+    } else {
+      let ary = Object.values(col)
+      if (fromIndex < 0) {
+        for (let i = ary.length - 1; i >= 0; --i) {
+          if (isEqual(ary[i], val))
+            return true
+        }
+      } else {
+        for (let i = fromIndex; i < ary.length; ++i) {
+          if (isEqual(ary[i], val))
+            return true
         }
       }
-      idx++;
     }
     return false;
   }
@@ -1186,8 +1190,7 @@ var lkwavestian = function () {
     let res = []
     let ary = Object.values(col)
     for (let i = 0; i < ary.length; ++i) {
-      let val = iteratee(ary[i])
-      res.push(val)
+      res.push(iteratee(ary[i], i, col))
     }
     return res
   }
@@ -1230,99 +1233,126 @@ var lkwavestian = function () {
     return res
   }
 
-return {
-  partition,
-  map,
-  keyBy,
-  identity,
-  includes,
-  matchesProperty,
-  bind,
-  matches,
-  property,
-  get,
-  toPath,
-  isMatch,
-  groupBy,
-  forEachRight,
-  forEach,
-  flatMapDepth,
-  flatMapDeep,
-  flatMap,
-  findLast,
-  mapValues,
-  countBy,
-  zipWith,
-  zipObject,
-  zip,
-  xorWith,
-  xorBy,
-  xor,
-  without,
-  add,
-  unzipWith,
-  unzip,
-  uniqWith,
-  uniqBy,
-  uniq,
-  unionWith,
-  unionBy,
-  union,
-  sortedUniqBy,
-  sortedUniq,
-  sortedLastIndexOf,
-  sortedLastIndexBy,
-  sortedLastIndex,
-  sortedIndexOf,
-  sortedIndexBy,
-  takeWhile,
-  takeRightWhile,
-  takeRight,
-  take,
-  tail,
-  pullAt,
-  pullAllWith,
-  pullAllBy,
-  pullAll,
-  pull,
-  nth,
-  intersectionWith,
-  intersectionBy,
-  intersection,
-  flattenDepth,
-  flatten,
-  dropWhile,
-  dropRightWhile,
-  differenceWith,
-  isEqual,
-  differenceBy,
-  difference,
-  sumBy,
-  sum,
-  minBy,
-  min,
-  maxBy,
-  max,
-  toArray,
-  find,
-  filter,
-  every,
-  sortedIndex,
-  reverse,
-  initial,
-  indexOf,
-  head,
-  fromPairs,
-  flattenDeep,
-  findLastIndex,
-  findIndex,
-  fill,
-  lastIndexOf,
-  last,
-  join,
-  dropRight,
-  drop,
-  compact,
-  chunk,
-}
+  function reduce(col, iteratee, acc) {
+    iteratee = baseIteratee(iteratee)
+    for (var key in col) {
+      if (acc === undefined) {
+        acc = col[key]
+        continue
+      }
+      acc = iteratee(acc, col[key], key, col)
+    }
+    return acc
+  }
+
+  function reduceRight(col, iteratee, acc) {
+    iteratee = baseIteratee(iteratee)
+    let keys = Object.keys(col)
+    for (let i = keys.length - 1; i >= 0; --i) {
+      if (acc === undefined) {
+        acc = keys[i]
+        continue
+      }
+      acc = iteratee(acc, col[keys[i]], keys[i], col)
+    }
+    return acc
+  }
+
+  return {
+    reduceRight,
+    reduce,
+    partition,
+    map,
+    keyBy,
+    identity,
+    includes,
+    matchesProperty,
+    bind,
+    matches,
+    property,
+    get,
+    toPath,
+    isMatch,
+    groupBy,
+    forEachRight,
+    forEach,
+    flatMapDepth,
+    flatMapDeep,
+    flatMap,
+    findLast,
+    mapValues,
+    countBy,
+    zipWith,
+    zipObject,
+    zip,
+    xorWith,
+    xorBy,
+    xor,
+    without,
+    add,
+    unzipWith,
+    unzip,
+    uniqWith,
+    uniqBy,
+    uniq,
+    unionWith,
+    unionBy,
+    union,
+    sortedUniqBy,
+    sortedUniq,
+    sortedLastIndexOf,
+    sortedLastIndexBy,
+    sortedLastIndex,
+    sortedIndexOf,
+    sortedIndexBy,
+    takeWhile,
+    takeRightWhile,
+    takeRight,
+    take,
+    tail,
+    pullAt,
+    pullAllWith,
+    pullAllBy,
+    pullAll,
+    pull,
+    nth,
+    intersectionWith,
+    intersectionBy,
+    intersection,
+    flattenDepth,
+    flatten,
+    dropWhile,
+    dropRightWhile,
+    differenceWith,
+    isEqual,
+    differenceBy,
+    difference,
+    sumBy,
+    sum,
+    minBy,
+    min,
+    maxBy,
+    max,
+    toArray,
+    find,
+    filter,
+    every,
+    sortedIndex,
+    reverse,
+    initial,
+    indexOf,
+    head,
+    fromPairs,
+    flattenDeep,
+    findLastIndex,
+    findIndex,
+    fill,
+    lastIndexOf,
+    last,
+    join,
+    dropRight,
+    drop,
+    compact,
+    chunk,
+  }
 }()
