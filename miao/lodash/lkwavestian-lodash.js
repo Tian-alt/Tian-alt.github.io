@@ -1353,6 +1353,10 @@ var lkwavestian = function () {
   }
 
   function castArray(value) {
+    if (isArrayLike(value))
+      return value
+    if (arguments.length == 0)
+      return []
     return [value]
   }
 
