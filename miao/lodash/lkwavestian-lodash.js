@@ -1345,11 +1345,11 @@ var lkwavestian = function () {
   }
 
   function defer(f, ...args) {
-    return setTimeout(f(...args), 0)
+    return setTimeout(f(...args), 0) - 1
   }
 
   function delay(f, wait, ...args) {
-    return setTimeout(f(...args), wait)
+    return setTimeout(f(...args), wait) - 1
   }
 
   function castArray(value) {
