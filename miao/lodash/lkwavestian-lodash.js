@@ -1394,6 +1394,8 @@ var lkwavestian = function () {
   }
 
   function isArrayLike(value) {
+    if (value === null)
+      return false
     if (typeof value == 'function') {
       return false
     }
@@ -1404,12 +1406,34 @@ var lkwavestian = function () {
     if (typeof value == 'function') {
       return false
     }
-    if (typeof value == 'object')
-      return false
-    return value.length >= 0 && value.length <= Number.MAX_SAFE_INTEGER
+    return typeof value === 'object' && value.length >= 0 && value.length <= Number.MAX_SAFE_INTEGER
+  }
+
+  function isBoolean(value) {
+    let type = Object.prototype.toString.call(value)
+    return isEqual(type, "[object Boolean]")
+  }
+
+  function isDate(value) {
+    let type = Object.prototype.toString.call(value)
+    return isEqual(type, "[object Date]")
+  }
+
+  function isEmpty(value) {
+    if (isArrayLike(value))
+      return value.length === 0
+    if (typeof value === 'object') {
+      for (let key in value) {
+        return false
+      }
+    }
+    return true
   }
 
   return {
+    isEmpty,
+    isDate,
+    isBoolean,
     isArrayLikeObject,
     isArrayLike,
     isArrayBuffer,
