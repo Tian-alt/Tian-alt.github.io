@@ -1353,11 +1353,11 @@ var lkwavestian = function () {
   }
 
   function castArray(value) {
-    if (isArrayLike(value))
+    if (isArray(value))
       return value
-    if (arguments.length == 0)
-      return []
-    return [value]
+    if (arguments.length != 0)
+      return [value]
+    return []
   }
 
   function conformsTo(object, source) {
@@ -1434,7 +1434,167 @@ var lkwavestian = function () {
     return true
   }
 
+  function ary(f, n = f.length) {
+    return function (...args) {
+      return f(...args.slice(0, n))
+    }
+  }
+
+  function before(n, f) {
+    var c = 0
+    var res
+    return function (...args) {
+      if (c < n) {
+        c++
+        return res = f.call(this, ...args)
+      } else
+        return res
+    }
+  }
+
+  function after(n, f) {
+    var c = 0
+    var res
+    return function (...args) {
+      if (c >= n) {
+        return f(...args)
+      }
+      c++
+    }
+  }
+
+  function flip(f) {
+    return function (...args) {
+      return f(...(args.reverse()))
+    }
+  }
+
+  function negate(predicate) {
+    return function (...args) {
+      return !predicate(...args)
+    }
+  }
+
+  function isEqualWith(a, b, customizer) {
+    if (customizer(a) === customizer(b))
+      return true
+    if (a == null || typeof a != "object" || b == null || typeof b != "object")
+      return false
+    var propsInA = 0,
+      propsInB = 0
+    for (var prop in a) {
+      propsInA += 1
+    }
+    for (var prop in b) {
+      propsInB += 1
+      if (!(prop in a) || !isEqualWith(a[prop], b[prop], customizer))
+        return false
+    }
+    return propsInA == propsInB
+  }
+
+  function isError(value) {
+    let type = Object.prototype.toString.call(value)
+    return isEqual(type, "[object Error]")
+  }
+
+  function isFinite(value) {
+    return Number.isFinite(value)
+  }
+
+  function isFunction(value) {
+    let type = Object.prototype.toString.call(value)
+    return isEqual(type, "[object Function]")
+  }
+
+  function isInteger(value) {
+    return Number.isInteger(value)
+  }
+
+  function isLength(value) {
+    return isInteger(value) && value >= 0 && value <= 2 ** 32 - 1
+  }
+
+  function isFunction(value) {
+    let type = Object.prototype.toString.call(value)
+    return isEqual(type, "[object Map]")
+  }
+
+  function isMatchWith(object, source, customizer) {
+    if (customizer(object) === customizer(source)) return true
+
+    if (object == null || typeof object != "object" ||
+      source == null || typeof source != "object")
+      return false;
+
+    var propsInA = 0,
+      propsInB = 0;
+
+    for (var prop in object)
+      propsInA += 1;
+
+    for (var prop in source) {
+      propsInB += 1;
+      if (!(prop in object) || !isMatchWith(object[prop], source[prop]))
+        return false;
+    }
+
+    return propsInB <= propsInA;
+  }
+
+  function isNaN(value) {
+    return Number.isNaN(value)
+  }
+
+  function isNative(fn) {
+    return (/\{\s*\[native code\]\s*\}/).test('' + fn);
+  }
+
+  function isNil(value) {
+    return value === undefined || value === null
+  }
+
+  function isNull(value) {
+    return value === null
+  }
+
+  function isNumber(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object Number]"
+  }
+
+  function isObject(value) {
+    return typeof value === 'object' && !isNull(value) || typeof value === 'function'
+  }
+
+  function isObjectLike(value) {
+    return typeof value === 'object' && !isNull(value)
+  }
+
+  function isPlainObject(value) {
+    return value.__proto__ == Object.prototype || value.__proto__ == null
+  }
+
   return {
+    isPlainObject,
+    isObjectLike,
+    isObject,
+    isNumber,
+    isNull,
+    isNil,
+    isNaN,
+    isMatchWith,
+    isFunction,
+    isLength,
+    isInteger,
+    isFinite,
+    isError,
+    isEqualWith,
+    negate,
+    flip,
+    after,
+    before,
+    ary,
     isEmpty,
     isDate,
     isBoolean,
