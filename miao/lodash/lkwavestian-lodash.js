@@ -1515,7 +1515,7 @@ var lkwavestian = function () {
     return isInteger(value) && value >= 0 && value <= 2 ** 32 - 1
   }
 
-  function isFunction(value) {
+  function isMap(value) {
     let type = Object.prototype.toString.call(value)
     return isEqual(type, "[object Map]")
   }
@@ -1575,7 +1575,76 @@ var lkwavestian = function () {
     return value.__proto__ == Object.prototype || value.__proto__ == null
   }
 
+  function isRegExp(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object RegExp]"
+  }
+
+  function isSafeInteger(value) {
+    return Number.isSafeInteger(value)
+  }
+
+  function isSet(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object Set]"
+  }
+
+  function isString(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object String]"
+  }
+
+  function isSymbol(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object Symbol]"
+  }
+
+  function isTypedArray(value) {
+    var typedArrayTypes = ["Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array",
+      "Uint32Array", "Float32Array", "Float64Array"
+    ]
+    for (let item of typedArrayTypes) {
+      if (Object.prototype.toString.call(value).includes(item))
+        return true
+    }
+    return false
+  }
+
+  function isUndefined(value) {
+    return value === undefined
+  }
+
+  function isWeakMap(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object WeakMap]"
+  }
+
+  function isWeakSet(value) {
+    let type = Object.prototype.toString.call(value)
+    return type === "[object WeakSet]"
+  }
+
+  function lt(value, other) {
+    return value < other
+  }
+
+  function lte(value, other) {
+    return value <= other
+  }
+
   return {
+    lte,
+    lt,
+    isWeakSet,
+    isWeakMap,
+    isUndefined,
+    isTypedArray,
+    isSymbol,
+    isString,
+    isSet,
+    isSafeInteger,
+    isRegExp,
+    isMap,
     isPlainObject,
     isObjectLike,
     isObject,
