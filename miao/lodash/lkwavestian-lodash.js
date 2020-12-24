@@ -1543,7 +1543,7 @@ var lkwavestian = function () {
   }
 
   function isNaN(value) {
-    if (isObject(value))
+    if (isObject(value) && isNumber(value))
       return value.toString() === 'NaN'
     if (isNumber(value))
       return Number.isNaN(value)
@@ -1711,15 +1711,19 @@ var lkwavestian = function () {
   }
 
   function max(ary) {
-    if (ary == [])
+    if (ary.length == 0)
       return undefined
     return Math.max(...ary)
   }
 
   function maxBy(ary, iteratee) {
     iteratee = baseIteratee(iteratee)
-    aryVal = ary.map(item => iteratee(item))
-    return max(aryVal)
+    let maxIdx = 0
+    for (let i = 1; i < ary.length; ++i) {
+      if (iteratee(ary[i]) > iteratee(ary[maxIdx]))
+        maxIdx = i
+    }
+    return ary[maxIdx]
   }
 
   function mean(ary) {
@@ -1733,15 +1737,19 @@ var lkwavestian = function () {
   }
 
   function min(ary) {
-    if (ary == [])
+    if (ary.length == 0)
       return undefined
     return Math.min(...ary)
   }
 
   function minBy(ary, iteratee) {
     iteratee = baseIteratee(iteratee)
-    aryVal = ary.map(item => iteratee(item))
-    return min(aryVal)
+    let minIdx = 0
+    for (let i = 1; i < ary.length; ++i) {
+      if (iteratee(ary[i]) < iteratee(ary[minIdx]))
+        minIdx = i
+    }
+    return ary[minIdx]
   }
 
   function multiply(multiplier, multiplicand) {
@@ -1752,9 +1760,12 @@ var lkwavestian = function () {
     return Math.round(number * 10 ** precision) / 10 ** precision
   }
 
-
+  function subtract(minuend, subtrahend) {
+    return minuend - subtrahend
+  }
 
   return {
+    subtract,
     round,
     multiply,
     minBy,
