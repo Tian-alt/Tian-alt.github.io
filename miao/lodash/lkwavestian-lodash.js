@@ -1543,7 +1543,11 @@ var lkwavestian = function () {
   }
 
   function isNaN(value) {
-    return Number.isNaN(value)
+    if (isObject(value))
+      return value.toString() === 'NaN'
+    if (isNumber(value))
+      return Number.isNaN(value)
+    return false
   }
 
   function isNative(fn) {
@@ -1632,7 +1636,144 @@ var lkwavestian = function () {
     return value <= other
   }
 
+  function toFinite(value) {
+    if (value === Infinity)
+      return Number.MAX_VALUE
+    if (value === -Infinity)
+      return Number.MIN_VALUE
+    return Number(value)
+  }
+
+  function curry(f, length = f.length) {
+    return function (...args) {
+      if (args.length == length)
+        return f(...args)
+      else {
+        /* return curry(f.bind(null, ...args), length - args.length) */
+        return f.bind(null, ...args)
+      }
+    }
+  }
+
+  function toInteger(value) {
+    return Math.floor(toFinite(value))
+  }
+
+  function toLength(value) {
+    let length = toInteger(value)
+    if (length < 0)
+      return 0
+    if (length > 2 ** 32 - 1)
+      return 2 ** 32 - 1
+    return length
+  }
+
+  function toNumber(value) {
+    return Number(value)
+  }
+
+  function toPlainObject(value) {
+    var res = {}
+    for (var key in value) {
+      res[key] = value[key]
+    }
+    return res
+  }
+
+  function toSafeInteger(value) {
+    value = toInteger(value)
+    if (value > Number.MAX_SAFE_INTEGER)
+      return Number.MAX_SAFE_INTEGER
+    if (value < Number.MIN_SAFE_INTEGER)
+      return Number.MIN_SAFE_INTEGER
+    return value
+  }
+
+  function assign(object, ...sources) {
+    sources.forEach(obj => {
+      Object.keys(obj).forEach(key => {
+        object[key] = obj[key]
+      });
+    });
+    return object
+  }
+
+  function ceil(number, precision = 0) {
+    return Math.ceil(number * 10 ** precision) / 10 ** precision
+  }
+
+  function divide(dividend, divisor) {
+    return dividend / divisor
+  }
+
+  function floor(number, precision = 0) {
+    return Math.floor(number * 10 ** precision) / 10 ** precision
+  }
+
+  function max(ary) {
+    if (ary == [])
+      return undefined
+    return Math.max(...ary)
+  }
+
+  function maxBy(ary, iteratee) {
+    iteratee = baseIteratee(iteratee)
+    aryVal = ary.map(item => iteratee(item))
+    return max(aryVal)
+  }
+
+  function mean(ary) {
+    return ary.reduce((a, b) => a + b) / ary.length
+  }
+
+  function meanBy(ary, iteratee) {
+    iteratee = baseIteratee(iteratee)
+    aryVal = ary.map(item => iteratee(item))
+    return mean(aryVal)
+  }
+
+  function min(ary) {
+    if (ary == [])
+      return undefined
+    return Math.min(...ary)
+  }
+
+  function minBy(ary, iteratee) {
+    iteratee = baseIteratee(iteratee)
+    aryVal = ary.map(item => iteratee(item))
+    return min(aryVal)
+  }
+
+  function multiply(multiplier, multiplicand) {
+    return multiplier * multiplicand
+  }
+
+  function round(number, precision = 0) {
+    return Math.round(number * 10 ** precision) / 10 ** precision
+  }
+
+
+
   return {
+    round,
+    multiply,
+    minBy,
+    min,
+    meanBy,
+    mean,
+    maxBy,
+    max,
+    floor,
+    divide,
+    ceil,
+    assign,
+    toSafeInteger,
+    toPlainObject,
+    toNumber,
+    toLength,
+    toInteger,
+    curry,
+    toFinite,
     lte,
     lt,
     isWeakSet,
