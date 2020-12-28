@@ -1764,7 +1764,72 @@ var lkwavestian = function () {
     return minuend - subtrahend
   }
 
+  function clamp(number, lower, upper) {
+    if (number < lower) return lower
+    if (number > upper) return upper
+    return number
+  }
+
+  function camelCase(str) {
+    return str
+      .replace(/\w/g, match => match.toLowerCase())
+      .replace(/[-_\s]+(.)?/g, (match, c) => c ? c.toUpperCase() : '')
+      .replace(/^\w/, match => match.toLowerCase())
+  }
+
+  function capitalize(str) {
+    return str
+      .toLowerCase()
+      .replace(/^\w/, match => match.toUpperCase())
+  }
+
+  function endsWith(str = '', target, pos = str.length) {
+    let reg = new RegExp('' + target, 'g')
+    return str.search(reg) == pos - 1
+  }
+
+  function escape(str = '') {
+    var escapeChars = {
+      '&': '&amp',
+      '<': '&lt',
+      '>': '&gt',
+      '"': '&quot',
+      "'": '&apos',
+      '`': '&grave'
+    }
+    let res = ''
+    for (let i = 0; i < str.length; ++i) {
+      if (Object.keys(escapeChars).includes(str[i]))
+        res += escapeChars[str[i]]
+      else
+        res += str[i]
+    }
+    return res
+  }
+
+  function escapeRegExp(str = '') {
+    return str.replace(/[\^\$\s\.\*\+\?\(\)\[\]\,\|]/g, '\\$&')
+  }
+
+  function kebabCase(str = '') {
+    return str
+      .replace(/^\W*|\W*$/g, '')
+      .replace(/^_*|_*$/g, '')
+      .replace(/\w/g, match => match.toLowerCase())
+      .replace(/(?:\W|_)\w/, match => match.toUpperCase())
+      .replace(/\W|_/, '')
+
+  }
+
+
   return {
+    kebabCase,
+    escapeRegExp,
+    escape,
+    endsWith,
+    capitalize,
+    camelCase,
+    clamp,
     subtract,
     round,
     multiply,
