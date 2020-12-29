@@ -1790,18 +1790,18 @@ var lkwavestian = function () {
 
   function escape(str = '') {
     var escapeChars = {
-      '&': '&amp',
-      '<': '&lt',
-      '>': '&gt',
-      '"': '&quot',
-      "'": '&apos',
-      '`': '&grave'
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&apos;',
+      '`': '&grave;'
     }
     let res = ''
     for (let i = 0; i < str.length; ++i) {
-      if (Object.keys(escapeChars).includes(str[i]))
+      if (Object.keys(escapeChars).includes(str[i])) {
         res += escapeChars[str[i]]
-      else
+      } else
         res += str[i]
     }
     return res
@@ -1812,13 +1812,16 @@ var lkwavestian = function () {
   }
 
   function kebabCase(str = '') {
-    return str
-      .replace(/^\W*|\W*$/g, '')
-      .replace(/^_*|_*$/g, '')
-      .replace(/\w/g, match => match.toLowerCase())
-      .replace(/(?:\W|_)\w/, match => match.toUpperCase())
-      .replace(/\W|_/, '')
-
+    if (!str.match(/_|\W/)) {
+      return str
+        .replace(/([A-Z])/g, '-$1')
+        .toLowerCase()
+    } else {
+      return str
+        .replace(/^(\s|_)+|(\s|_)+$/g, '')
+        .replace(/\w/g, match => match.toLowerCase())
+        .replace(/\s|_/, '-')
+    }
   }
 
 
