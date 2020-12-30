@@ -1354,7 +1354,7 @@ var lkwavestian = function () {
     if (isArray(value))
       return value
     if (arguments.length != 0)
-      return [value] bb
+      return [value] 
     return []
   }
 
