@@ -1931,17 +1931,17 @@ var lkwavestian = function () {
     return res
   }
 
-  function trim(str, char = ' ') {
+  function trim(str, char = '\\s') {
     let reg = new RegExp('[' + char + ']+', 'g')
     return str.replace(reg, '')
   }
 
-  function trimEnd(str, chars = ' ') {
+  function trimEnd(str, chars = '\\s') {
     let reg = new RegExp('[' + chars + ']+' + '$', 'g')
     return str.replace(reg, '')
   }
 
-  function trimStart(str, chars = ' ') {
+  function trimStart(str, chars = '\\s') {
     let reg = new RegExp('^' + '[' + chars + ']+', 'g')
     return str.replace(reg, '')
   }
@@ -1952,7 +1952,7 @@ var lkwavestian = function () {
     return matches.map(match => match.toUpperCase()).join(' ')
   }
 
-  /* function unescape(str = '') {
+  function unescape(str = '') {
     let res = ''
     var unescapeChars = {
       '&amp;': "&",
@@ -1969,14 +1969,57 @@ var lkwavestian = function () {
         res += str[i]
     }
     return res
-  } */
+  }
 
   function words(str, pattern = /\b\w+\b/g) {
     return str.match(pattern)
   }
 
+  function truncate(str, opt = {}) {
+    if (!opt.hasOwnProperty('length')) opt['length'] = 30
+    if (!opt.hasOwnProperty('omission')) opt['omission'] = '...'
+    let res = ''
+    let endIndex
+    if (opt.hasOwnProperty('separator')) {
+      let reg = new RegExp(opt.separator, 'g')
+      let match
+      while (match = reg.exec(str)) {
+        endIndex = match.index
+      }
+    } else {
+      endIndex = opt['length'] - opt['omission'].length
+    }
+    res = str.slice(0, endIndex)
+    res += opt['omission']
+    return res
+  }
+
+  function split(str, sep, limit) {
+    let res = []
+    let reg = new RegExp(sep, 'g')
+    let prevLastIndex = 0
+    let count = 0
+    let match
+    while (match = reg.exec(str)) {
+      res.push(str.slice(prevLastIndex, match.index))
+      res.push(...match.slice(1))
+      count++
+      if(count == limit)
+        break
+      prevLastIndex = reg.lastIndex
+    }
+    return res
+  }
+
+  function replace(str, pattern, replacement) {
+    return str.replace(pattern, replacement)
+  }
+
 
   return {
+    replace,
+    split,
+    truncate,
     words,
     unescape,
     upperFirst,
