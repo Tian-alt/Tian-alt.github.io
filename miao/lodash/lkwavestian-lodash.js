@@ -1354,7 +1354,7 @@ var lkwavestian = function () {
     if (isArray(value))
       return value
     if (arguments.length != 0)
-      return [value] 
+      return [value]
     return []
   }
 
@@ -1952,7 +1952,7 @@ var lkwavestian = function () {
     return matches.map(match => match.toUpperCase()).join(' ')
   }
 
-  function unescape(str = '') {
+  /* function unescape(str = '') {
     let res = ''
     var unescapeChars = {
       '&amp;': "&",
@@ -1969,7 +1969,7 @@ var lkwavestian = function () {
         res += str[i]
     }
     return res
-  }
+  } */
 
   function words(str, pattern = /\b\w+\b/g) {
     return str.match(pattern)
