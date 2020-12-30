@@ -993,9 +993,7 @@ var lkwavestian = function () {
   function mapValues(obj, iteratee) {
     let res = {}
     var iteratee = baseIteratee(iteratee)
-    for (let key in obj) {
-      res[key] = iteratee(obj[key])
-    }
+    Object.keys(obj).forEach(key => res[key] = iteratee(obj[key]))
     return res
   }
 
@@ -1356,7 +1354,7 @@ var lkwavestian = function () {
     if (isArray(value))
       return value
     if (arguments.length != 0)
-      return [value]
+      return [value] bb
     return []
   }
 
@@ -1824,8 +1822,180 @@ var lkwavestian = function () {
     }
   }
 
+  function lowerCase(str) {
+    let reg = /[A-Z][a-z]+|[A-Z]+|[a-z]+/g
+    let matches = str.match(reg)
+    return matches.map(match => match.toLowerCase()).join(' ')
+  }
+
+  function lowerFirst(str) {
+    return str.replace(/\w?/, match => match.toLowerCase())
+  }
+
+  function pad(str = '', length = 0, chars = ' ') {
+    if (str.length < length) {
+      let padLength = length - str.length
+      let padLengthLeft = padLength >>> 1
+      let padLengthRight = padLength - padLengthLeft
+      str = str.padStart(padLengthLeft + str.length, chars)
+      str = str.padEnd(padLengthRight + str.length, chars)
+    }
+    return str
+  }
+
+  function padEnd(str = '', length = 0, char = ' ') {
+    let strLen = str.length
+    let charLen = char.length
+    if (length > strLen) {
+      let mul = Math.floor((length - strLen) / charLen)
+      let mod = (length - strLen) % charLen
+      for (let i = 0; i < mul; ++i) {
+        str += char
+      }
+      for (let j = 0; j < mod; ++j) {
+        str += char[j]
+      }
+    }
+    return str
+  }
+
+  function padStart(str = '', length = 0, char = ' ') {
+    let strLen = str.length
+    let charLen = char.length
+    let startChar = ''
+    if (length > strLen) {
+      let mul = Math.floor((length - strLen) / charLen)
+      let mod = (length - strLen) % charLen
+      for (let i = 0; i < mul; ++i) {
+        startChar += char
+      }
+      for (let j = 0; j < mod; ++j) {
+        startChar += char[j]
+      }
+    }
+    return startChar + str
+  }
+
+  function parseInt(str, radix = 10) {
+    return Number.parseInt(str, radix)
+  }
+
+  function repeat(str, n = 1) {
+    let res = ''
+    for (let i = 0; i < n; ++i) {
+      res += str
+    }
+    return res
+  }
+
+  function snakeCase(str = '') {
+    let reg = /[A-Z][a-z]+|[A-Z]+|[a-z]+/g
+    let matches = str.match(reg)
+    return matches.map(item => item.toLowerCase()).join('_')
+  }
+
+  function upperFirst(str) {
+    return str.replace(/\w?/, match => match.toUpperCase())
+  }
+
+  function startCase(str) {
+    let reg = /[A-Z][a-z]+|[A-Z]+|[a-z]+/g
+    let matches = str.match(reg)
+    return matches.map(item => upperFirst(item)).join(' ')
+  }
+
+  function startsWith(str = '', target, pos = 0) {
+    let reg = new RegExp(target)
+    return reg.exec(str).index === pos
+  }
+
+  function toLower(str) {
+    let res = ''
+    for (let i = 0; i < str.length; ++i) {
+      if (/[A-Z]/.test(str[i])) {
+        res += String.fromCharCode(str.charCodeAt(i) + 32)
+      } else
+        res += str[i]
+    }
+    return res
+  }
+
+  function toUpper(str) {
+    let res = ''
+    for (let i = 0; i < str.length; ++i) {
+      if (/[a-z]/.test(str[i])) {
+        res += String.fromCharCode(str.charCodeAt(i) - 32)
+      } else
+        res += str[i]
+    }
+    return res
+  }
+
+  function trim(str, char = ' ') {
+    let reg = new RegExp('[' + char + ']+', 'g')
+    return str.replace(reg, '')
+  }
+
+  function trimEnd(str, chars = ' ') {
+    let reg = new RegExp('[' + chars + ']+' + '$', 'g')
+    return str.replace(reg, '')
+  }
+
+  function trimStart(str, chars = ' ') {
+    let reg = new RegExp('^' + '[' + chars + ']+', 'g')
+    return str.replace(reg, '')
+  }
+
+  function upperCase(str) {
+    let reg = /[A-Z][a-z]+|[A-Z]+|[a-z]+/g
+    let matches = str.match(reg)
+    return matches.map(match => match.toUpperCase()).join(' ')
+  }
+
+  function unescape(str = '') {
+    let res = ''
+    var unescapeChars = {
+      '&amp;': "&",
+      '&apos;': "'",
+      '&grave;': "`",
+      '&gt;': ">",
+      '&lt;': "<",
+      '&quot;': ""
+    }
+    for (let i = 0; i < str.length; ++i) {
+      if (Object.keys(unescapeChars).includes(str[i])) {
+        res += unescapeChars[str[i]]
+      } else
+        res += str[i]
+    }
+    return res
+  }
+
+  function words(str, pattern = /\b\w+\b/g) {
+    return str.match(pattern)
+  }
+
 
   return {
+    words,
+    unescape,
+    upperFirst,
+    upperCase,
+    trimStart,
+    trimEnd,
+    trim,
+    toUpper,
+    toLower,
+    startsWith,
+    startCase,
+    snakeCase,
+    repeat,
+    parseInt,
+    padStart,
+    padEnd,
+    pad,
+    lowerFirst,
+    lowerCase,
     kebabCase,
     escapeRegExp,
     escape,
