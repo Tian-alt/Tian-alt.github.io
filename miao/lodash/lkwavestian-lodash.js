@@ -1086,23 +1086,23 @@ var lkwavestian = function () {
   }
 
   function toPath(val) {
-    return val.split(/\.|\[|\]\.|\]\[/g);
+    let res = val.split(/\.|\[|\]\.|\]\[|\]/g)
+    if (!res[res.length - 1])
+      res.length--
+    return res
   }
 
   function get(obj, path, defaultVal) {
-    if (typeof path == 'string') {
-      path = toPath(path);
+    if (typeof path == 'string')
+      path = toPath(path)
+    for (let i = 0; i < path.length; ++i) {
+      if (obj == undefined)
+        return defaultVal
+      obj = obj[path[i]]
     }
-    for (let i = 0; i < path.length; i++) {
-      if (obj == undefined) {
-        return defaultVal;
-      }
-      obj = obj[path[i]];
-    }
-    if (obj == undefined) {
-      return defaultVal;
-    }
-    return obj;
+    if (obj == undefined)
+      return defaultVal
+    return obj
   }
 
   function property(path) {
@@ -1952,23 +1952,13 @@ var lkwavestian = function () {
     return matches.map(match => match.toUpperCase()).join(' ')
   }
 
-  function unescape(str = '') {
-    let res = ''
-    var unescapeChars = {
-      '&amp;': "&",
-      '&apos;': "'",
-      '&grave;': "`",
-      '&gt;': ">",
-      '&lt;': "<",
-      '&quot;': ""
-    }
-    for (let i = 0; i < str.length; ++i) {
-      if (Object.keys(unescapeChars).includes(str[i])) {
-        res += unescapeChars[str[i]]
-      } else
-        res += str[i]
-    }
-    return res
+  function unescape(string = '') {
+    return string
+      .replace(/\&amp\;/g, '&')
+      .replace(/\&gt\;/g, '>')
+      .replace(/\&lt\;/g, '<')
+      .replace(/\&quot\;/g, '"')
+      .replace(/\&apos\;/g, "'")
   }
 
   function words(str, pattern = /\b\w+\b/g) {
@@ -2004,7 +1994,7 @@ var lkwavestian = function () {
       res.push(str.slice(prevLastIndex, match.index))
       res.push(...match.slice(1))
       count++
-      if(count == limit)
+      if (count == limit)
         break
       prevLastIndex = reg.lastIndex
     }
@@ -2015,8 +2005,153 @@ var lkwavestian = function () {
     return str.replace(pattern, replacement)
   }
 
+  function inRange(number, start = 0, end) {
+    if (arguments.length < 3) {
+      end = start
+      start = 0
+    }
+    if (start > end) {
+      let temp = start
+      start = end
+      end = temp
+    }
+
+    return number > start && number < end
+  }
+
+  function assignIn(obj, ...source) {
+    source.forEach(item => {
+      for (let key in item) {
+        obj[key] = item[key]
+      }
+    })
+    return obj
+  }
+
+  function at(obj, paths) {
+    let res = []
+    if (isString(paths)) {
+      return res.push(get(obj, paths))
+    }
+    paths.forEach(path => {
+      res.push(get(obj, path))
+    });
+    return res
+  }
+
+  function defaults(obj, ...sources) {
+    sources.forEach(item => {
+      for (let key in item) {
+        if (key in obj)
+          return
+        else
+          obj[key] = item[key]
+      }
+    })
+    return obj
+  }
+
+  function defaultsDeep(obj, ...sources) {
+    sources.forEach(item => {
+      for (let key in item) {
+        if (!obj.hasOwnProperty(key))
+          obj[key] = item[key]
+        else {
+          if (isObject(obj[key]) && isObject(item[key])) {
+            defaultsDeep(obj[key], item[key])
+          }
+        }
+      }
+    })
+    return obj
+  }
+
+  function findKey(obj, predicate) {
+    var iteratee = baseIteratee(predicate)
+    let keys = Object.keys(obj)
+    for (let key of keys) {
+      if (iteratee(obj[key]))
+        return key
+    }
+  }
+
+  function findLastKey(obj, predicate) {
+    var iteratee = baseIteratee(predicate)
+    let keys = Object.keys(obj)
+    for (let i = keys.length - 1; i >= 0; --i) {
+      if (iteratee(obj[keys[i]]))
+        return keys[i]
+    }
+  }
+
+  function forInRight(obj, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let keys = []
+    for (let key in obj) {
+      keys.push(key)
+    }
+    for (let i = keys.length - 1; i >= 0; --i) {
+      if (iteratee(obj[keys[i]], keys[i], obj) === false)
+        break
+    }
+    return obj
+  }
+
+  function forIn(obj, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let keys = []
+    for (let key in obj) {
+      keys.push(key)
+    }
+    for (let i = 0; i < keys.length; ++i) {
+      if (iteratee(obj[keys[i]], keys[i], obj) === false)
+        break
+    }
+    return obj
+  }
+
+  function forOwn(obj, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; ++i) {
+      if (iteratee(obj[keys[i]], keys[i], obj) === false)
+        break
+    }
+    return obj
+  }
+
+  function forOwnRight(obj, iteratee) {
+    var iteratee = baseIteratee(iteratee)
+    let keys = Object.keys(obj)
+    for (let i = keys.length - 1; i >= 0; --i) {
+      if (iteratee(obj[keys[i]], keys[i], obj) === false)
+        break
+    }
+    return obj
+  }
+
+  function functionsIn(obj) {
+    let res = []
+    for (let key in obj) {
+      if (isFunction(obj[key]))
+        res.push(key)
+    }
+    return res
+  }
 
   return {
+    functionsIn,
+    forOwnRight,
+    forOwn,
+    forIn,
+    forInRight,
+    findLastKey,
+    findKey,
+    defaultsDeep,
+    defaults,
+    at,
+    assignIn,
+    inRange,
     replace,
     split,
     truncate,
