@@ -2139,7 +2139,17 @@ var lkwavestian = function () {
     return res
   }
 
+  function functions(obj) {
+    let res = []
+    Object.keys(obj).forEach(key => {
+      if (isFunction(obj[key]))
+        res.push(key)
+    })
+    return res
+  }
+
   return {
+    functions,
     functionsIn,
     forOwnRight,
     forOwn,
