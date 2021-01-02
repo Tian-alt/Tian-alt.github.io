@@ -2148,7 +2148,142 @@ var lkwavestian = function () {
     return res
   }
 
+  function has(obj, path) {
+    if (isString(path))
+      path = toPath(path)
+    for (let key of path) {
+      if (!obj.hasOwnProperty(key)) //？？
+        return false
+      obj = obj[key]
+    }
+    return true
+  }
+
+  function hasIn(obj, path) {
+    return Boolean(get(obj, path))
+  }
+
+  function invert(obj) {
+    let res = {}
+    Object.entries(obj).forEach(entry => {
+      res[entry[1]] = entry[0]
+    });
+    return res
+  }
+
+  function identity(...arg) {
+    return arg[0];
+  }
+
+  function invertBy(obj, iteratee = identity) {
+    let iterate = baseIteratee(iteratee)
+    let res = {}
+    Object.entries(obj).forEach(entry => {
+      let key = iteratee(entry[1]).toString()
+      let val = entry[0]
+      if (!has(res, key))
+        res[key] = [val]
+      else
+        res[key].push(val)
+    });
+    return res
+  }
+
+  function invoke(obj, path, ...args) {
+    let pathMethod = toPath(path)
+    path = pathMethod.slice(0, -1)
+    let method = pathMethod.slice(-1)
+    return get(obj, path)[method](...args)
+  }
+
+  function keys(obj) {
+    return Object.keys(obj)
+  }
+
+  function keysIn(obj) {
+    let res = []
+    for (let key in obj) {
+      res.push(key)
+    }
+    return res
+  }
+
+  function mapKeys(obj, iteratee) {
+    let res = {}
+    var iteratee = baseIteratee(iteratee)
+    Object.keys(obj).forEach(key => {
+      res[iteratee(obj[key], key)] = obj[key]
+    })
+    return res
+  }
+
+  function pick(obj, props) {
+    let res = {}
+    props = Array.from(props)
+    props.forEach(prop => {
+      res[prop] = obj[prop]
+    })
+    return res
+  }
+
+  function pickBy(obj, predicate = identity) {
+    let res = {}
+    let iteratee = baseIteratee(predicate)
+    Object.keys(obj).forEach(key => {
+      if (iteratee(obj[key]))
+        res[key] = obj[key]
+    })
+    return res
+  }
+
+  function omit(obj, props) {
+    let res = {}
+    props = Array.from(props)
+    Object.keys(obj).forEach(key => {
+      if (!props.includes(key))
+        res[key] = obj[key]
+    })
+    return res
+  }
+
+  function omitBy(obj, predicate = identity) {
+    let res = {}
+    let iteratee = baseIteratee(predicate)
+    Object.keys(obj).forEach(key => {
+      if (!iteratee(obj[key]))
+        res[key] = obj[key]
+    })
+    return res
+  }
+
+  function set(obj, path, value) {
+    if (isString(path))
+      path = toPath(path);
+    path.reduce((acc, key, index) => {
+      if (index == path.length - 1)
+        acc[key] = value
+      if (!acc[key] && !isNaN(Number(path[index + 1])))
+        acc[key] = []
+      if (!acc[key] && isNaN(Number(path[index + 1])))
+        acc[key] = {}
+      return acc[key]
+    }, obj)
+    return obj
+  }
   return {
+    set,
+    omitBy,
+    omit,
+    pickBy,
+    pick,
+    mapKeys,
+    keysIn,
+    keys,
+    invoke,
+    invertBy,
+    invert,
+    hasIn,
+    has,
     functions,
     functionsIn,
     forOwnRight,
