@@ -2262,15 +2262,92 @@ var lkwavestian = function () {
     path.reduce((acc, key, index) => {
       if (index == path.length - 1)
         acc[key] = value
-      if (!acc[key] && !isNaN(Number(path[index + 1])))
+      else if (!acc[key] && !isNaN(Number(path[index + 1])))
         acc[key] = []
-      if (!acc[key] && isNaN(Number(path[index + 1])))
+      else if (!acc[key] && isNaN(Number(path[index + 1])))
         acc[key] = {}
       return acc[key]
     }, obj)
     return obj
   }
+
+  function toPairs(obj) {
+    if (isMap(obj) | isSet(obj))
+      return obj.entries()
+    return Object.entries(obj)
+  }
+
+  function toPairsIn(obj) {
+    let res = []
+    if (isMap(obj) || isSet(obj))
+      return obj.entries()
+    for (let key in obj) {
+      let entry = []
+      entry.push(key)
+      entry.push(obj[key])
+      res.push(entry)
+    }
+    return res
+  }
+
+  function transform(obj, iteratee = identity, acc) {
+    let keys = Object.keys(obj)
+    for (let key of keys) {
+      if (iteratee(acc, obj[key], key, obj) === false)
+        break
+    }
+    return acc
+  }
+
+  function unset(obj, path) {
+    if (isString(path))
+      path = toPath(path)
+    let val = get(obj, path)
+    if (!val || !Object.isExtensible(obj))
+      return false
+    let unset = obj
+    for (let key of path) {
+      if (key == path.slice(-1))
+        return delete unset[key]
+      unset = unset[key]
+    }
+  }
+
+  function update(obj, path, updater) {
+    let value = updater(get(obj, path))
+    return set(obj, path, value)
+  }
+
+  function values(obj) {
+    if (!isObject)
+      obj = Object(obj)
+    return Object.values(obj)
+  }
+
+  function valuesIn(obj) {
+    if (!isObject)
+      obj = Object(obj)
+    let res = []
+    for (let key in obj) {
+      res.push(obj[key])
+    }
+    return res
+  }
+
+  function defaultTo(value, defaultValue) {
+    if (isNaN(value) || isNull(value) || isUndefined(value))
+      return defaultValue
+    return value
+  }
   return {
+    defaultTo,
+    valuesIn,
+    values,
+    update,
+    unset,
+    transform,
+    toPairsIn,
+    toPairs,
     set,
     omitBy,
     omit,
