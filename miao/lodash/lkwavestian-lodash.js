@@ -2339,7 +2339,83 @@ var lkwavestian = function () {
       return defaultValue
     return value
   }
+
+  function rangeRight(start = 0, end, step = 1) {
+    var result = []
+    if (step == 0) {
+      let count = start
+      while (count < end) {
+        result.push(start)
+        count++
+      }
+      return result.reverse()
+    }
+    if (arguments.length == 1) {
+      start = 0
+      end = arguments[0]
+      step = 1
+    }
+    if (end < 0) {
+      if (arguments.length == 1) {
+        step = -1
+      }
+      for (var i = start; i > end; i += step) {
+        result.push(i)
+      }
+      return result.reverse()
+    }
+
+    for (var i = start; i < end; i += step) {
+      result.push(i)
+    }
+    return result.reverse()
+  }
+
+  function range(start = 0, end, step = 1) {
+    let res = []
+    if (step == 0) {
+      let count = start
+      while (count < end) {
+        res.push(start)
+        count++
+      }
+      return res
+    }
+    if (arguments.length == 1) {
+      end = start
+      start = 0
+    }
+    if (end < 0) {
+      if (arguments.length == 1)
+        step = -1
+      for (var i = start; i > end; i += step) {
+        res.push(i)
+      }
+      return res
+    }
+    for (var i = start; i < end; i += step) {
+      res.push(i)
+    }
+    return res
+  }
+
+  function times(n, iteratee = identity) {
+    let res = []
+    for (let i = 0; i < n; ++i) {
+      res.push(iteratee(i))
+    }
+    return res
+  }
+
+  function uniqueId(length) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+  }
+
   return {
+    uniqueId,
+    times,
+    range,
+    rangeRight,
     defaultTo,
     valuesIn,
     values,
