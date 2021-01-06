@@ -2411,7 +2411,60 @@ var lkwavestian = function () {
     return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
   }
 
+  function cloneDeep(val) {
+    if (isNull(val) || isUndefined(val)) return val; // 如果是null或者undefined我就不进行拷贝操作
+    if (isDate(val)) return new Date(val);
+    if (isRegExp(val)) return new RegExp(val);
+    // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
+    if (typeof val !== "object") return val;
+    var res = {}
+    for (var key in val) {
+      if (val.hasOwnProperty(key)) {
+        if (isObject(val[key]))
+          res[key] = cloneDeep(val[key])
+        else
+          res[key] = val[key]
+      }
+    }
+    return res
+  }
+
+  function concat(ary, ...values) {
+    let res = [...ary]
+    values.forEach(item => {
+      if (isArray(item))
+        res.push(...item)
+      else
+        res.push(item)
+    })
+    return res
+  }
+
+  function unary(func) {
+    return ary(func, 1)
+  }
+
+  function once(fn) {
+    let called = false;
+    return function (...args) {
+      if (!called) {
+        called = true;
+        return fn(...args);
+      }
+    }
+  }
+
+  function spread(func, start = 0) {
+    return function (args) {
+      return func(...args.slice(start))
+    }
+  }
+
   return {
+    spread,
+    once,
+    unary,
+    concat,
     uniqueId,
     times,
     range,
