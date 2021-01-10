@@ -2460,7 +2460,165 @@ var lkwavestian = function () {
     }
   }
 
+  function parseJson(str) {
+    let i = 0
+
+    return parseValue()
+
+    function parseValue() {
+      var char = str[i]
+      if (char == '[')
+        return parseArray()
+      if (char == '{')
+        return parseObject()
+      if (char == '"')
+        return parseString()
+      if (char == 't')
+        return parseTrue()
+      if (char == 'f')
+        return parseFalse()
+      if (char == 'n')
+        return parseNull()
+      return parseNumber()
+    }
+
+    function parseArray() {
+      var res = []
+      i++ //skip '['
+      while (str[i] != ']') {
+        var val = parseValue()
+        res.push(val)
+        if (str[i] == ',')
+          i++ //skip ','
+      }
+      i++ //skip ']'
+      return res
+    }
+
+    function parseObject() {
+      var res = {}
+      i++ //skip '{'
+      while (str[i] != '}') {
+        let key = parseString()
+        i++ //skip '"'
+        let value = parseValue()
+        res[key] = value
+        if (str[i] == ',')
+          i++ //skip ','
+      }
+      i++ //skip '}'
+      return res
+    }
+
+    function parseString() {
+      var res = ''
+      i++ //skip '"'
+      while (str[i] != '"') {
+        res += str[i++]
+      }
+      i++
+      return res
+    }
+
+    function parseTrue() {
+      i += 4
+      return true
+    }
+
+    function parseFalse() {
+      i += 5
+      return false
+    }
+
+    function parseNull() {
+      i += 4
+      return null
+    }
+
+    function parseNumber() {
+      var numStr = ''
+      while (/[\de+\-.]/.test(str[i]) && str[i]) {
+        numStr += str[i++]
+      }
+      return parseFloat(numStr)
+    }
+  }
+
+  function stringifyJson(val) {
+    //如果是字符串，左右拼接 "
+    if (isString(val))
+      return '"' + val + '"'
+    //如果是数字/布尔值/，转换成字符串类型
+    if (isNumber(val) || isBoolean(val) || isNull(val))
+      return String(val)
+    //NaN 和 Infinity 格式的数值及 null 都会被当做 null
+    if (isNaN(val) || isFinite(val) || isNull(val))
+      return "null"
+    //undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略（出现在非数组对象的属性值中时）
+    if (isUndefined(val) || isFunction(val) || isSymbol(val))
+      return undefined
+    if (isObject(val)) {
+      let array = isArray(val)
+      let res = []
+      for (let key in val) {
+        //如果是对象，包括 Map/Set/WeakMap/WeakSet，仅会序列化可枚举的属性
+        if (val.hasOwnProperty(key)) {
+          let value = val[key]
+          //undefined、任意的函数以及 symbol 值，会被转换成 ull（出现在数组对象的属性值中时）
+          if ((isUndefined(value) || isFunction(value) || isSymbol(value)) && isArray) {
+            res.push("null")
+            continue
+          }
+          //如果值为数字/布尔值，保留原值，否则递归
+          if (!isNumber(value) && !isBoolean(value))
+            value = stringifyJson(value)
+          //判断是否是数组，并将值 push 到数组中去
+          res.push((array ? "" : '"' + key + '":') + value)
+        }
+      }
+      return (array ? "[" : "{") + String(res) + (array ? "]" : "}")
+    }
+  }
+
+  function conforms(source) {
+    return function (object) {
+      return conformsTo(object, source)
+    }
+  }
+
+  function constant(val) {
+    return function () {
+      return val
+    }
+  }
+
+  function flow(funcs) {
+    return function (...args) {
+      let res
+      funcs.forEach(fun => {
+        res = fun(...args)
+        args = [res]
+      })
+      return res
+    }
+  }
+
+  function method(path, ...args) {
+    if (typeof path === "string")
+      path = this.toPath(path);
+    return function (obj) {
+      return get(obj, path)(...args)
+    }
+  }
+
   return {
+    method,
+    flow,
+    constant,
+    conforms,
+    stringifyJson,
+    cloneDeep,
+    parseJson,
     spread,
     once,
     unary,
