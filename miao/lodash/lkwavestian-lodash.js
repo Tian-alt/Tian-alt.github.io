@@ -2604,14 +2604,19 @@ var lkwavestian = function () {
   }
 
   function method(path, ...args) {
-    if (typeof path === "string")
-      path = this.toPath(path);
     return function (obj) {
       return get(obj, path)(...args)
     }
   }
 
+  function methodOf(obj, ...args) {
+    return function (path) {
+      return get(obj, path)(...args)
+    }
+  }
+
   return {
+    methodOf,
     method,
     flow,
     constant,
