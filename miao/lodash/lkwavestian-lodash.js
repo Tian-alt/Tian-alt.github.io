@@ -2615,7 +2615,21 @@ var lkwavestian = function () {
     }
   }
 
+  function nthArg(n) {
+    return function (...args) {
+      return nth(args, n)
+    }
+  }
+
+  function propertyOf(obj) {
+    return function (path) {
+      return get(obj, path)
+    }
+  }
+
   return {
+    propertyOf,
+    nthArg,
     methodOf,
     method,
     flow,
