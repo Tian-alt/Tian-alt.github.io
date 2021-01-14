@@ -2411,17 +2411,31 @@ var lkwavestian = function () {
     return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
   }
 
-  function cloneDeep(val) {
+  function cloneDeep(val, map = new Map()) { //map用于判断是否有环
     if (isNull(val) || isUndefined(val)) return val; // 如果是null或者undefined我就不进行拷贝操作
     if (isDate(val)) return new Date(val);
     if (isRegExp(val)) return new RegExp(val);
     // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
-    if (typeof val !== "object") return val;
-    var res = {}
-    for (var key in val) {
+    if (!isObject(val)) return val;
+    //如果是数组，每个项都要拷贝到新数组中
+    if (isArray(val)) {
+      let res = []
+      for (let value of val) {
+        res.push(cloneDeep(value))
+      }
+      return res
+    }
+    //如果是对象，需要判断环
+    let res = {}
+    if (map.has(val))
+      return map.get(val)
+    else
+      map.set(val, res) //注意这里有闭包的存在，键为当前扫描的对象，值为相对应创建的复制对象
+    //深拷贝对象需要判断是否有环
+    for (let key in val) {
       if (val.hasOwnProperty(key)) {
         if (isObject(val[key]))
-          res[key] = cloneDeep(val[key])
+          res[key] = cloneDeep(val[key], map)
         else
           res[key] = val[key]
       }
